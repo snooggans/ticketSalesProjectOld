@@ -1,0 +1,63 @@
+<div class="row">
+
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>Логин</span>
+			<input type="text" class="mb-3"
+			       pInputText
+			       [ngClass]="{'input-error': !login}"
+			       [(ngModel)]="login"/>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>E-Mail</span>
+			<input type="text" class="mb-3"
+			       pInputText
+			       [(ngModel)]="email"/>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>Пароль</span>
+			<input type="password" class="mb-3"
+			       pInputText
+			       [ngClass]="{'input-error': !psw}"
+			       [(ngModel)]="psw"/>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>Пароль еще раз</span>
+			<input type="password" class="mb-3"
+			       pInputText
+			       [ngClass]="{'input-error': !pswRepeat}"
+			       [(ngModel)]="pswRepeat"/>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>Номер карты</span>
+			<input type="text"
+			       pInputText
+			       [(ngModel)]="cardNumber"/>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="mt-4 d-block h-100">
+			<button pButton (click)="registration($event)"
+			        [disabled]="!login || !psw || !pswRepeat"
+			        type="button"
+					class="d-block w-100">Регистрация</button>
+		</div>
+	</div>
+</div>
+
+<div class="mt-4">
+
+</div>

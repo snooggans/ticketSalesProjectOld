@@ -1,10 +1,52 @@
-<div class="d-flex flex-column">
-	<span>{{loginText}}</span>
-	<input type="text" class="mb-3"
-			pInputText
-			[(ngModel)]="property"/>
-	<span>{{pswText}}</span>
-	<input type="text"
-		  pInputText
-		  [(ngModel)]="property"/>
+<div class="row">
+
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>{{loginText}}</span>
+			<input type="text" class="mb-3"
+			       pInputText
+			       [ngClass]="{'input-error': !login}"
+			       [(ngModel)]="login"/>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="d-flex flex-column">
+			<span>{{pswText}}</span>
+			<input type="text"
+			       pInputText
+			       [ngClass]="{'input-error': !psw}"
+			       [(ngModel)]="psw"/>
+		</div>
+	</div>
+
+	<div class="col-md-6 col-lg-2 my-3">
+		<div class="d-flex flex-column">
+			<p-checkbox name="vip" label="есть VIP карта" (onChange)="vipStatusSelected()" [binary]="true"
+			            [(ngModel)]="selectedValue"></p-checkbox>
+		</div>
+	</div>
+
+	<div class="col-md-6 col-lg-4">
+		<div class="d-flex flex-column" *ngIf="selectedValue">
+			<span>Номер карты</span>
+			<input type="text"
+			       pInputText
+			       [ngClass]="{'input-error': !cardNumber}"
+			       [(ngModel)]="cardNumber"/>
+		</div>
+	</div>
+
+	<div class="col-md-12 col-lg-6">
+		<div class="mt-4 d-block h-100">
+			<button (click)="onAuth($event)"
+			        pButton
+			        type="button"
+			        class="d-block w-100">
+					{{authTextButton}}</button>
+		</div>
+	</div>
+
+	<div class="mt-4">
+
+	</div>
 </div>
