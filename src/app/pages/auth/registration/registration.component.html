@@ -50,10 +50,19 @@
 
 	<div class="col-md-6">
 		<div class="mt-4 d-block h-100">
-			<button pButton (click)="registration($event)"
+			<button pButton (click)="registration()"
 			        [disabled]="!login || !psw || !pswRepeat"
 			        type="button"
 					class="d-block w-100">Регистрация</button>
+		</div>
+	</div>
+
+	<div class="col-lg-6 my-3">
+		<div class="d-flex flex-column">
+			<p-checkbox name="userSave" label="сохранить пользователя"
+			            [binary]="true"
+			            [(ngModel)]="isUserSave">
+			</p-checkbox>
 		</div>
 	</div>
 </div>

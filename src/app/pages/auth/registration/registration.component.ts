@@ -15,6 +15,7 @@ export class RegistrationComponent implements OnInit {
 	pswRepeat: string;
 	email: string;
 	cardNumber: string
+	isUserSave: boolean = true
 
 	constructor(
 		private messageService: MessageService,
@@ -24,7 +25,13 @@ export class RegistrationComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	registration(ev: Event): void|boolean {
+	userSave(user: IUser): void{
+		console.log('w');
+		const userString = JSON.stringify(user);
+		window.localStorage.setItem(`user_${user.login}`, userString)
+	}
+
+	registration(): void|boolean {
 		if (this.psw !== this.pswRepeat) {
 			this.messageService.add({
 				severity: 'error',
@@ -47,6 +54,7 @@ export class RegistrationComponent implements OnInit {
 				summary: 'Вы зарегистрированы',
 				detail: 'Поздравляем! Регистрация прошла успешно'
 			});
+			this.userSave(userObj)
 		}else {
 			this.messageService.add({
 				severity: 'warn',
