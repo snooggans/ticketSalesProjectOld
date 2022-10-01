@@ -30,6 +30,4 @@ export class AuthService {
 			this.usersStorage.push(user)
 		}
 	}
-
-
 }
