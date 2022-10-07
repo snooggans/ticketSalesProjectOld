@@ -7,11 +7,25 @@ import {IUser} from "../../models/users";
 export class AuthService {
 
 	private usersStorage: IUser[] = [];
+	public hasCardNumber: boolean;
 
 	constructor() {
 	}
 
+	// checkUserHasCardNumber(user: IUser){
+	// 	if (user.cardNumber){
+	// 		this.hasCardNumber = true;
+	// 	}
+	// }
+
 	checkUser(user: IUser): boolean{
+		let userInlocalStorage: IUser = <IUser>{};
+		let getUserInlocalStorage = window.localStorage.getItem(`user_${user.login}`)
+		if (getUserInlocalStorage){
+			userInlocalStorage = JSON.parse(getUserInlocalStorage)
+			this.usersStorage = [userInlocalStorage]
+		}
+
 		const isUserExist = this.usersStorage.find(el => el.login === user.login);
 		if (isUserExist){
 			return isUserExist.psw === user.psw

@@ -6,7 +6,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 @Component({
 	selector: 'app-registration',
 	templateUrl: './registration.component.html',
-	styleUrls: ['./registration.component.css']
+	styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
 
@@ -15,7 +15,7 @@ export class RegistrationComponent implements OnInit {
 	pswRepeat: string;
 	email: string;
 	cardNumber: string
-	isUserSave: boolean = true
+	isUserSave: boolean = true;
 
 	constructor(
 		private messageService: MessageService,
@@ -26,9 +26,10 @@ export class RegistrationComponent implements OnInit {
 	}
 
 	userSave(user: IUser): void{
-		console.log('w');
 		const userString = JSON.stringify(user);
-		window.localStorage.setItem(`user_${user.login}`, userString)
+		if (this.isUserSave) {
+			window.localStorage.setItem(`user_${user.login}`, userString)
+		}
 	}
 
 	registration(): void|boolean {

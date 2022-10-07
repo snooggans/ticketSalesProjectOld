@@ -22,12 +22,12 @@
 	<div class="col-md-6 col-lg-2 my-3">
 		<div class="d-flex flex-column">
 			<p-checkbox name="vip" label="есть VIP карта" (onChange)="vipStatusSelected()" [binary]="true"
-			            [(ngModel)]="selectedValue"></p-checkbox>
+			            [(ngModel)]="hasCardNumber"></p-checkbox>
 		</div>
 	</div>
 
 	<div class="col-md-6 col-lg-4">
-		<div class="d-flex flex-column" *ngIf="selectedValue">
+		<div class="d-flex flex-column" *ngIf="hasCardNumber">
 			<span>Номер карты</span>
 			<input type="text"
 			       pInputText

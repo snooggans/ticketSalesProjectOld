@@ -1,0 +1,48 @@
+.ticket-inner {
+	background: #f2f3f4;
+	border-radius: 10px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.ticket-inner {
+	&__content {
+		width: 100%;
+		min-height: 200px;
+		padding: 16px;
+		flex: 1;
+	}
+
+	&__title {
+		color: #5578d5;
+	}
+
+	&__desc{
+		color: #5d5d5d;
+	}
+}
+
+
+.ticket-img {
+	width: 100%;
+	height: 250px;
+	background: center / cover;
+	position: relative;
+}
+
+.ticket-price {
+	text-align: right;
+	font-weight: 700;
+	position: absolute;
+	bottom: 0;
+	right: 1rem;
+	transform: translateY(33%);
+	padding: 0.3rem 1rem;
+	border-radius: 5px;
+	background: #ff8a1a;
+	color: #ffffff;
+	text-shadow: 1px 1px 1px rgba(#000, 0.5);
+	box-shadow: 3px 0 30px rgba(#000, 0.6);
+}

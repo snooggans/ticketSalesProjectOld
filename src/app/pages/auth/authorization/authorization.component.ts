@@ -2,11 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {IUser} from "../../../models/users";
 import {MessageService} from "primeng/api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
-  styleUrls: ['./authorization.component.css']
+  styleUrls: ['./authorization.component.scss']
 })
 
 export class AuthorizationComponent implements OnInit, OnDestroy {
@@ -15,21 +16,21 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
    psw: string;
    login: string;
    selectedValue: boolean;
+	hasCardNumber: boolean;
    cardNumber: string;
 	authTextButton: string
 
 	constructor(
 		private authService: AuthService,
-		private messageService: MessageService) { }
+		private messageService: MessageService,
+		private router: Router
+	) { }
 
 	ngOnInit(): void {
-	  console.log('init');
-
-	  this.authTextButton = "Авторизоваться"
+		this.authTextButton = "Авторизоваться"
 	}
 
 	ngOnDestroy(): void {
-	  console.log('destroy')
 	}
 
 	vipStatusSelected(): void{
@@ -50,6 +51,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 					`Пароль: ${authUser.psw} ` +
 					`Карта: ${authUser.cardNumber}`
 			});
+		this.router.navigate(['tickets/tickets-list'])
 		}else{
 			this.messageService.add({
 				severity: 'error',
