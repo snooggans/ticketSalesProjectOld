@@ -1,1 +1,5 @@
-<p>aside works!</p>
+<p-dropdown [options]="menuTypes"
+            [(ngModel)]="selectedMenuType"
+            (onChange)="changeType($event)"
+			optionLabel="label"></p-dropdown>
+
