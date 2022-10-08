@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
 	selector: 'app-header',
@@ -11,8 +12,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	items: MenuItem[];
 	time: Date;
 	private timerInterval: number;
+	public user: string;
 
-	constructor() {
+	constructor(private userService: UserService) {
 	}
 
 	ngOnInit(): void {
@@ -31,7 +33,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 		this.timerInterval = window.setInterval(() => {
 			this.time = new Date();
-		}, 1000)
+		}, 1000) // time
+
+		this.user = this.userService.getUser().login
 	}
 
 	ngOnDestroy(): void{

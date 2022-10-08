@@ -3,28 +3,31 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {IUser} from "../../../models/users";
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
-  selector: 'app-authorization',
-  templateUrl: './authorization.component.html',
-  styleUrls: ['./authorization.component.scss']
+	selector: 'app-authorization',
+	templateUrl: './authorization.component.html',
+	styleUrls: ['./authorization.component.scss']
 })
 
 export class AuthorizationComponent implements OnInit, OnDestroy {
 	loginText = 'Логин';
-   pswText = 'Пароль';
-   psw: string;
-   login: string;
-   selectedValue: boolean;
+	pswText = 'Пароль';
+	psw: string;
+	login: string;
+	selectedValue: boolean;
 	hasCardNumber: boolean;
-   cardNumber: string;
+	cardNumber: string;
 	authTextButton: string
 
 	constructor(
 		private authService: AuthService,
 		private messageService: MessageService,
-		private router: Router
-	) { }
+		private router: Router,
+		private userService: UserService
+	) {
+	}
 
 	ngOnInit(): void {
 		this.authTextButton = "Авторизоваться"
@@ -33,16 +36,16 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 	}
 
-	vipStatusSelected(): void{
+	vipStatusSelected(): void {
 	}
 
-	onAuth(): void{
+	onAuth(): void {
 		const authUser: IUser = {
 			psw: this.psw,
 			login: this.login,
 			cardNumber: this.cardNumber
 		}
-		if (this.authService.checkUser(authUser)){
+		if (this.authService.checkUser(authUser)) {
 			this.messageService.add({
 				severity: 'success',
 				summary: 'Вы авторизованы',
@@ -51,8 +54,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 					`Пароль: ${authUser.psw} ` +
 					`Карта: ${authUser.cardNumber}`
 			});
-		this.router.navigate(['tickets/tickets-list'])
-		}else{
+			this.userService.setUser(authUser);
+			this.router.navigate(['tickets/tickets-list'])
+		} else {
 			this.messageService.add({
 				severity: 'error',
 				summary: 'Проверьте логин и пароль',
