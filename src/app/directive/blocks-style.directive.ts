@@ -33,7 +33,7 @@ export class BlocksStyleDirective implements AfterViewInit {
 		}
 
 		setTimeout(()=>{
-			this.renderComplete.emit(true)
+			this.renderComplete.emit(true);
 		})
 	}
 

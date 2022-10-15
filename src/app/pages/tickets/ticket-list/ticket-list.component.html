@@ -5,7 +5,7 @@
      [selector]="'.ticket-item'"
      [initFirst]="true"
      class="container">
-	<div>Всего туров: {{tourWrap.childElementCount}}</div>
+	<div *ngIf="blockCount">Всего туров: {{tourWrap.childElementCount}}</div>
 	<div class="mb-5">Активный тур: {{blockDirective.activeElementIndex + 1}}</div>
 	<div class="row"
 	     #tourWrap>

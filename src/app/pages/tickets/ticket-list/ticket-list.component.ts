@@ -13,9 +13,9 @@ import {BlocksStyleDirective} from "../../../directive/blocks-style.directive";
 export class TicketListComponent implements OnInit, AfterViewInit {
 
 	tickets: ITour[];
+	blockCount: boolean = false;
 
 	@ViewChild('blockDirective', {read: BlocksStyleDirective}) blockDirective: BlocksStyleDirective;
-	// @ViewChild('tourWrap') tourWrap: ElementRef;
 
 	constructor(private ticketService: TicketService,
 	            private ticketStorage: TicketsStorageService,
@@ -32,7 +32,7 @@ export class TicketListComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit(){
-		// console.log(this.tourWrap)
+
 	}
 
 	goToTicketInfoPage(item: ITour): void {
@@ -40,8 +40,7 @@ export class TicketListComponent implements OnInit, AfterViewInit {
 	}
 
 	directiveRenderComplete(ev:boolean){
-		// this.tourWrap.childElementCount;
 		this.blockDirective.initStyle(2)
+		this.blockCount = true;
 	}
-
 }
