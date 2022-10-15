@@ -66,7 +66,8 @@ export class BlocksStyleDirective implements AfterViewInit {
 		if (this.items[index]) {
 			if (this.index < this.items.length + 1) {
 				this.removeClassSelected(this.items[this.index]);
-				this.addClassSelected(this.items[index])
+				this.addClassSelected(this.items[index]);
+				this.index = index;
 				this.activeElementIndex = index
 			}
 		}
