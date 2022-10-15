@@ -44,7 +44,7 @@ export class BlocksStyleDirective implements AfterViewInit {
 	initKeyUp(ev: KeyboardEvent): void {
 
 		if (ev.key === 'ArrowRight') {
-			if (this.index < this.items.length + 1) {
+			if (this.index < this.items.length -1) {
 				this.removeClassSelected(this.items[this.index]);
 				this.index++;
 				this.addClassSelected(this.items[this.index])
@@ -64,13 +64,11 @@ export class BlocksStyleDirective implements AfterViewInit {
 
 	initStyle(index: number): void{
 		if (this.items[index]) {
-			if (this.index < this.items.length + 1) {
 				this.removeClassSelected(this.items[this.index]);
 				this.addClassSelected(this.items[index]);
 				this.index = index;
 				this.activeElementIndex = index
 			}
-		}
 	}
 
 
