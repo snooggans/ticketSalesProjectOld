@@ -1,9 +1,13 @@
-<div class="d-flex">
+<div class="d-flex header-container">
 	<p-menubar [model]="items" class="flex-grow-1"></p-menubar>
-	<div class="time">
-		<div>{{time | date: 'H:mm:ss'}}</div>
-		<div class="time-date">{{time | date: 'E, d.m.yy'}}</div>
-		<div *ngIf="user" class="user">{{user.login}}</div>
+	<div class="info d-flex">
+		<div *ngIf="user" class="user">
+			<div><i class="pi pi-user"></i>{{user.login}}</div>
+		</div>
+		<div class="time">
+			<div>{{time | date: 'H:mm:ss'}}</div>
+			<div class="time-date">{{time | date: 'E, d.m.yy'}}</div>
+		</div>
 	</div>
 
 </div>
