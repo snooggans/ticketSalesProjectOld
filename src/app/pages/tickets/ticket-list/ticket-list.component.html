@@ -6,7 +6,8 @@
      [initFirst]="true"
      class="container">
 	<div *ngIf="blockCount">Всего туров: {{tourWrap.childElementCount}}</div>
-	<div class="mb-5">Активный тур: {{blockDirective.activeElementIndex + 1}}</div>
+	<div class="mb-5">Активный тур: {{blockDirective.activeElementIndex + 1}} -
+		<i>{{tickets[blockDirective.activeElementIndex].name}}</i></div>
 	<div class="row"
 	     #tourWrap>
 		<div *ngFor="let item of tickets" class="col-md-6 col-xxl-4 mb-4 ticket-item">

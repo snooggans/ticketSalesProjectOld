@@ -16,7 +16,8 @@ export class BlocksStyleDirective implements AfterViewInit {
 	private items: HTMLElement[];
 	private index: number = 0;
 	public $event: KeyboardEvent;
-	public activeElementIndex: number = 0
+	public activeElementIndex: number = 0;
+	// public activeElementName: string = '';
 
 	constructor(private el: ElementRef) {
 	}
@@ -59,7 +60,7 @@ export class BlocksStyleDirective implements AfterViewInit {
 			}
 		}
 
-		this.activeElementIndex = this.index
+		this.activeElementIndex = this.index;
 	}
 
 	initStyle(index: number): void{
