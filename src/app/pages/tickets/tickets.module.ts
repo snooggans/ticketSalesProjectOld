@@ -11,6 +11,7 @@ import {MenubarModule} from "primeng/menubar";
 import {ButtonModule} from "primeng/button";
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
+import {BlocksStyleDirective} from "../../directive/blocks-style.directive";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {FormsModule} from "@angular/forms";
 		HeaderComponent,
 		FooterComponent,
 		TicketListComponent,
-		AsideComponent
+		AsideComponent,
+		BlocksStyleDirective
 	],
 	imports: [
 		CommonModule,

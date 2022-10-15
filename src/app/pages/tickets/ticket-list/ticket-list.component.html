@@ -1,6 +1,15 @@
-<div class="container">
-	<div class="row">
-		<div *ngFor="let item of tickets" class="col-md-6 col-xxl-4 mb-4">
+<div appBlocksStyle
+     #blockDirective='blockStyle'
+     (renderComplete)="directiveRenderComplete($event)"
+     *ngIf="tickets"
+     [selector]="'.ticket-item'"
+     [initFirst]="true"
+     class="container">
+	<div>Всего туров: {{tourWrap.childElementCount}}</div>
+	<div class="mb-5">Активный тур: {{blockDirective.activeElementIndex + 1}}</div>
+	<div class="row"
+	     #tourWrap>
+		<div *ngFor="let item of tickets" class="col-md-6 col-xxl-4 mb-4 ticket-item">
 			<div class="ticket-inner">
 				<div class="ticket-img"
 				     [ngStyle]="{background: 'url('+' /assets/img/'+item.img+')'}">
@@ -14,7 +23,9 @@
 						{{item.description}}
 					</p>
 				</div>
-				<button pButton class="mx-3 mb-3 d-block">Купить билет</button>
+				<button pButton
+				        (click)="goToTicketInfoPage(item)"
+				        class="mx-3 mb-3 d-block">Купить билет</button>
 			</div>
 		</div>
 	</div>
