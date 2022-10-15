@@ -16,7 +16,7 @@ export class BlocksStyleDirective implements AfterViewInit {
 	private items: HTMLElement[];
 	private index: number = 0;
 	public $event: KeyboardEvent;
-	public activeElementIndex: number
+	public activeElementIndex: number = 0
 
 	constructor(private el: ElementRef) {
 	}
