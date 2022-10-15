@@ -1,8 +1,8 @@
 <div class="d-flex header-container">
 	<p-menubar [model]="items" class="flex-grow-1"></p-menubar>
 	<div class="info d-flex">
-		<div *ngIf="user" class="user">
-			<div><i class="pi pi-user"></i>Привет, <b>{{user.login}}</b></div>
+		<div *ngIf="userLogin" class="user">
+			<div><i class="pi pi-user"></i>Привет, <b>{{userLogin}}</b></div>
 		</div>
 		<div class="time">
 			<div>{{time | date: 'H:mm:ss'}}</div>

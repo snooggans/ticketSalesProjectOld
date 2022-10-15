@@ -13,18 +13,19 @@ export class UserService {
 
 	getUser(): IUser {
 		return this.user
-		// let userInlocalStorage: IUser = <IUser>{};
-		// let getUserInlocalStorage = window.localStorage.getItem(`user_${user.login}`)
-		// if (getUserInlocalStorage){
-		// 	userInlocalStorage = JSON.parse(getUserInlocalStorage)
-		// 	return userInlocalStorage
-		// }
+	}
+
+	setActiveUser(): string {
+		let getActiveUser: any = window.localStorage.getItem('activeUser');
+		return JSON.parse(getActiveUser);
+	}
+
+	removeActiveUser(): void {
+		window.localStorage.removeItem('activeUser')
 	}
 
 	setUser(user: IUser): void{
-		this.user = user
-		// if (this.getUser(user)) {
-		// 	this.user = this.getUser(user);
-		// }
+		this.user = user;
+		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user.login));
 	}
 }

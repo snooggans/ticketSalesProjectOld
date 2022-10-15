@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 	time: Date;
 	private timerInterval: number;
 	public user: IUser;
+	public userLogin: string;
 	private isExtMenu: boolean = false;
 	@Input() menuType: IMenuType;
 	constructor(private userService: UserService) {
@@ -26,13 +27,15 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			this.time = new Date();
 		}, 1000) // time
 
-		this.user = this.userService.getUser()
+		this.user = this.userService.getUser();
+		this.userLogin = this.userService.setActiveUser()
 	}
 
 	ngOnDestroy(): void{
 		if(this.timerInterval){
 			window.clearInterval(this.timerInterval)
 		}
+		this.userLogin = '';
 	}
 
 	ngOnChanges(ev: SimpleChanges): void{
@@ -55,7 +58,8 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			},
 			{
 				label: 'Выйти',
-				routerLink: ['/auth']
+				routerLink: ['/auth'],
+				command: () => this.userService.removeActiveUser()
 			}
 		];
 		return this.items

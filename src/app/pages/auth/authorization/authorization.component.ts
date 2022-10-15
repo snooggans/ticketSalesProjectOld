@@ -45,6 +45,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 			login: this.login,
 			cardNumber: this.cardNumber
 		}
+
+
 		if (this.authService.checkUser(authUser)) {
 			this.messageService.add({
 				severity: 'success',
