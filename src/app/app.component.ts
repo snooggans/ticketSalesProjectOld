@@ -10,6 +10,6 @@ export class AppComponent {
   title = 'ticketSales2022';
 
   constructor(testing: ObservableExampleService) {
-	  testing.initOservable()
+	  // testing.initOservable()
   }
 }

@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			},
 			{
 				label: 'Настройки',
-				routerLink: ['tickets-list'],
+				routerLink: ['settings'],
 				visible: this.isExtMenu
 			},
 			{

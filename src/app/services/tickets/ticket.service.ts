@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TicketRestService} from "../rest/ticket-rest.service";
-import {ITour} from "../../models/tours";
-import {Observable} from "rxjs";
+import {ITour, ITourTypeSelect} from "../../models/tours";
+import {Observable, Subject} from "rxjs";
 
 
 @Injectable({
@@ -10,7 +10,18 @@ import {Observable} from "rxjs";
 
 export class TicketService {
 
+	private ticketSubject = new Subject<ITourTypeSelect>()
+	readonly $ticketType = this.ticketSubject.asObservable();
+
 	constructor(private ticketServiceRest: TicketRestService) {
+	}
+
+	getTicketTypeObservable(): Observable<ITourTypeSelect>{
+		return this.ticketSubject.asObservable()
+	}
+
+	updateTour(type: ITourTypeSelect): void{
+		this.ticketSubject.next(type);
 	}
 
 	getTickets(): Observable<ITour[]> {

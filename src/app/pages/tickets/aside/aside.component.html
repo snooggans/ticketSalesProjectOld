@@ -1,5 +1,14 @@
+<div class="mb-3">
 <p-dropdown [options]="menuTypes"
             [(ngModel)]="selectedMenuType"
             (onChange)="changeType($event)"
-			optionLabel="label"></p-dropdown>
+			optionLabel="label">
+	</p-dropdown>
+</div>
 
+<div>
+	<p-dropdown [options]="tourTypes"
+	            optionLabel="label"
+	            (onChange)="changeTourType($event)">
+	</p-dropdown>
+</div>
