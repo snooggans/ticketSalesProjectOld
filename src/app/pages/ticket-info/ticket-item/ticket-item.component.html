@@ -1,17 +1,67 @@
 <div class="container">
-<button class="btn btn-outline-dark mb-5" routerLink="/tickets/tickets-list">Назад</button>
-<div class="row">
-	<div class="col-lg-6">
-		<img src="/assets/img/{{ticket?.img}}" alt="{{ticket?.name}}" class="ticket-info__img w-100">
-	</div>
-	<div class="col-lg-6">
-		<div class="ticket-info">
-			<h1>{{ticket?.name}}</h1>
-			<div class="ticket-info__price">{{ticket?.price}}</div>
-			<div class="ticket-info__operator">{{ticket?.tourOperator}}</div>
-			<div class="ticket-info__description">{{ticket?.description}}</div>
+	<button class="btn btn-outline-dark mb-5" routerLink="/tickets/tickets-list">Назад</button>
+	<div class="row">
+		<div class="col-lg-6">
+			<img src="/assets/img/{{ticket?.img}}" alt="{{ticket?.name}}" class="ticket-info__img w-100">
+		</div>
+		<div class="col-lg-6">
+			<div class="ticket-info">
+				<h1>{{ticket?.name}}</h1>
+				<div class="ticket-info__price">{{ticket?.price}}</div>
+				<div class="ticket-info__operator">{{ticket?.tourOperator}}</div>
+				<div class="ticket-info__description">{{ticket?.description}}</div>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<div class="mt-5">
+		<h2 class="my-5">Личная информация</h2>
+		<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+			<span class="p-float-label">
+			    <input id="first-name" type="text"
+			           formControlName="firstName"
+			           pInputText>
+			    <label for="first-name">Имя</label>
+			</span>
+
+			<span class="p-float-label mt-5">
+			    <input id="last-name" type="text"
+			           formControlName="lastName"
+			           pInputText>
+			    <label for="last-name">Фамилия</label>
+			</span>
+
+			<span class="p-float-label mt-5">
+					<p-inputNumber id="cardNumber"
+					               formControlName="cardNumber">
+					</p-inputNumber>
+			    <label for="cardNumber">Номер карты</label>
+			</span>
+
+			<span class="p-float-label mt-5">
+					<p-inputNumber id="age"
+					               formControlName="age"
+					               [showButtons]="true">
+					</p-inputNumber>
+			    <label for="age">Возраст</label>
+			</span>
+
+			<span class="p-float-label mt-5">
+				<p-calendar id="birthDay" dateFormat="dd.mm.yy"
+				            formControlName="birthDay"></p-calendar>
+			    <label for="birthDay">День рождения</label>
+			</span>
+
+			<span class="p-float-label mt-5">
+			    <input id="citizen" type="text"
+			           formControlName="citizen"
+			           pInputText>
+			    <label for="citizen">Гражданство</label>
+			</span>
+			<button class="mt-5" pButton type="submit"
+			        [disabled]="!userForm.valid"
+			        label="Перейти к оформлению" ></button>
+		</form>
+	</div>
 
 </div>
