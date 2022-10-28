@@ -16,7 +16,7 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 	tickets: ITour[];
 	ticketsCopy: ITour[];
 	blockCount: boolean = false;
-	private tourUnsubscriber: Subscription;
+	tourUnsubscriber: Subscription;
 
 	@ViewChild('blockDirective', {read: BlocksStyleDirective}) blockDirective: BlocksStyleDirective;
 
@@ -26,15 +26,8 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.ticketService.getTickets().subscribe(
-			(data) => {
-				this.tickets = data;
-				this.ticketsCopy = [...this.tickets];
-				this.ticketStorage.setStorage(data);
-			}
-		)
 
-		this.tourUnsubscriber = this.ticketService.$ticketType.subscribe((data: ITourTypeSelect) => {
+		this.tourUnsubscriber = this.ticketService.ticketType$.subscribe((data: ITourTypeSelect) => {
 			console.log('data', data);
 
 			let ticketType: string;
@@ -57,6 +50,14 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 		});
 
+		this.ticketService.getTickets().subscribe(
+			(data) => {
+				this.tickets = data;
+				this.ticketsCopy = [...this.tickets];
+				this.ticketStorage.setStorage(data);
+			}
+		)
+
 	}
 
 	ngAfterViewInit(){
@@ -68,7 +69,7 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	directiveRenderComplete(ev:boolean){
-		this.blockDirective.initStyle(2)
+		this.blockDirective.initStyle(1)
 		this.blockCount = true;
 	}
 

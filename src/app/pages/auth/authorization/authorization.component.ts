@@ -48,6 +48,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
 
 		if (this.authService.checkUser(authUser)) {
+
+			this.userService.setToken('user-private-token');
+
 			this.messageService.add({
 				severity: 'success',
 				summary: 'Вы авторизованы',

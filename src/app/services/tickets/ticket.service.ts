@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TicketRestService} from "../rest/ticket-rest.service";
 import {ITour, ITourTypeSelect} from "../../models/tours";
-import {Observable, Subject} from "rxjs";
+import {map, Observable, Subject} from "rxjs";
 
 
 @Injectable({
@@ -11,7 +11,7 @@ import {Observable, Subject} from "rxjs";
 export class TicketService {
 
 	private ticketSubject = new Subject<ITourTypeSelect>()
-	readonly $ticketType = this.ticketSubject.asObservable();
+	readonly ticketType$ = this.ticketSubject.asObservable();
 
 	constructor(private ticketServiceRest: TicketRestService) {
 	}
@@ -26,6 +26,12 @@ export class TicketService {
 
 	getTickets(): Observable<ITour[]> {
 		return this.ticketServiceRest.getTickets()
+			.pipe(map(
+				(value) =>{
+					const singleTours = value.filter(el => el.type === "single");
+					return value.concat(singleTours)
+				}
+			))
 	}
 
 }

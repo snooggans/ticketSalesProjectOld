@@ -7,6 +7,7 @@ import {IUser} from "../../models/users";
 export class UserService {
 
 	private user: IUser;
+	private token: string;
 
 	constructor() {
 	}
@@ -28,4 +29,13 @@ export class UserService {
 		this.user = user;
 		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user.login));
 	}
+
+	setToken(token: string): void {
+		this.token = token;
+	}
+
+	getToken(){
+		return this.token;
+	}
+
 }
