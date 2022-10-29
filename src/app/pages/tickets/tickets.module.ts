@@ -13,6 +13,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
 import {BlocksStyleDirective} from "../../directive/blocks-style.directive";
 import {SettingsComponent} from "../settings/settings.component";
+import {CalendarModule} from "primeng/calendar";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {SettingsComponent} from "../settings/settings.component";
 		MenubarModule,
 		ButtonModule,
 		DropdownModule,
-		FormsModule
+		FormsModule,
+		CalendarModule
 	]
 })
 export class TicketsModule { }

@@ -40,4 +40,9 @@ export class AsideComponent implements OnInit {
 		this.ticketService.updateTour(ev.value)
 	}
 
+	selectDate(ev: string) {
+		console.log('ev', ev)
+		this.ticketService.updateTour({date:ev})
+	}
+
 }

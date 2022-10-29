@@ -48,6 +48,11 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 					console.log(this.tickets)
 					break;
 			}
+			setTimeout(() => {
+				this.blockDirective.updateItems();
+				this.blockDirective.initStyle(0);
+			},300);
+
 		});
 
 		this.ticketService.getTickets().subscribe(
@@ -56,8 +61,7 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.ticketsCopy = [...this.tickets];
 				this.ticketStorage.setStorage(data);
 			}
-		)
-
+		);
 	}
 
 	ngAfterViewInit(){
