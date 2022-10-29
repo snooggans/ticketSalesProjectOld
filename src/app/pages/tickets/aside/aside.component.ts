@@ -56,7 +56,7 @@ export class AsideComponent implements OnInit {
 				error: (err) => {
 					console.log(err);
 					this.messageService.add({
-						severity: 'Error',
+						severity: 'error',
 						summary: err.name,
 						detail: err.message
 					});
