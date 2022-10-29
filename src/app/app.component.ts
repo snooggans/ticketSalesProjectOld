@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ObservableExampleService} from "./services/testing/observable-example.service";
+import {ConfigServiceService} from "./services/config-service/config-service.service";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import {ObservableExampleService} from "./services/testing/observable-example.se
 export class AppComponent {
   title = 'ticketSales2022';
 
-  constructor(testing: ObservableExampleService) {
-	  // testing.initOservable()
+  constructor(config: ConfigServiceService) {
+		// config.configLoad()
   }
 }

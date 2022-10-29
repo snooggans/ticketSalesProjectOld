@@ -12,6 +12,7 @@ export class TicketService {
 
 	private ticketSubject = new Subject<ITourTypeSelect>()
 	readonly ticketType$ = this.ticketSubject.asObservable();
+	private http: any;
 
 	constructor(private ticketServiceRest: TicketRestService) {
 	}
@@ -32,6 +33,10 @@ export class TicketService {
 					return value.concat(singleTours)
 				}
 			))
+	}
+
+	getError(): Observable<any>{
+		return this.ticketServiceRest.getRestError();
 	}
 
 }

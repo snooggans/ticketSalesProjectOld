@@ -19,5 +19,4 @@ export class TicketsComponent implements OnInit {
 	updateSelectedType(ev: IMenuType): void {
 		this.selectedType = ev;
 	}
-
 }

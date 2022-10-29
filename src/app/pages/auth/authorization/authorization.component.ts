@@ -49,7 +49,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
 		if (this.authService.checkUser(authUser)) {
 
-			this.userService.setToken('user-private-token');
+			this.userService.setToken('user-private-token', true);
 
 			this.messageService.add({
 				severity: 'success',

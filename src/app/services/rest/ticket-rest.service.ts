@@ -14,4 +14,8 @@ export class TicketRestService {
 		return this.http.get<ITour[]>('https://62b9e756ff109cd1dc9dae16.mockapi.io/apiv/v1/tours/')
 	}
 
+	getRestError(): Observable<any> {
+		return this.http.get<any>('https://62b9e756ff109cd1dc9dae16.mockapi.io/apiv/v1/tours/notFound');
+	}
+
 }

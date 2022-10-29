@@ -39,9 +39,11 @@ export class UserService {
 		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user.login));
 	}
 
-	setToken(token: string): void {
+	setToken(token: string, store: boolean): void {
 		this.token = token;
-		this.storeUserToken(token);
+		if (store) {
+			this.storeUserToken(token);
+		}
 	}
 
 	storeUserToken(token: string): void {
