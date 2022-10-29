@@ -25,16 +25,39 @@ export class UserService {
 		window.localStorage.removeItem('activeUser')
 	}
 
-	setUser(user: IUser): void{
+	removeUserTokenInStorage(): void {
+		window.localStorage.removeItem('user_token');
+	}
+
+	logout(){
+		this.removeActiveUser();
+		this.removeUserTokenInStorage()
+	}
+
+	setUser(user: IUser): void {
 		this.user = user;
 		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user.login));
 	}
 
 	setToken(token: string): void {
 		this.token = token;
+		this.storeUserToken(token);
 	}
 
-	getToken(){
+	storeUserToken(token: string): void {
+		window.localStorage.setItem(`user_token`, JSON.stringify(token));
+	}
+
+	getUserTokenFromStorage(){
+		let userTokenLocalStorage: any = window.localStorage.getItem('user_token');
+		this.token = JSON.parse(userTokenLocalStorage);
+		return userTokenLocalStorage;
+	}
+
+	getToken() {
+		if(!this.token){
+			this.getUserTokenFromStorage()
+		}
 		return this.token;
 	}
 

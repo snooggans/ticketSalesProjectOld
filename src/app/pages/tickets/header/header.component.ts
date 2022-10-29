@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			{
 				label: 'Выйти',
 				routerLink: ['/auth'],
-				command: () => this.userService.removeActiveUser()
+				command: () => this.userService.logout()
 			}
 		];
 		return this.items
