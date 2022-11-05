@@ -9,7 +9,7 @@ import {ISettings} from "../../models/settings";
 	styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-
+	isTabCaching: boolean = true
 	private subjectForSubscribe = new Subject();
 
 	constructor(private settingsService: SettingsService) {

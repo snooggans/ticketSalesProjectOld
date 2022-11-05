@@ -21,6 +21,14 @@ export class UserService {
 		return JSON.parse(getActiveUser);
 	}
 
+	getActiveUserData(): IUser{
+		let getActiveUserId: any = window.localStorage.getItem('activeUser');
+		const activeUserId = JSON.parse(getActiveUserId);
+
+		let getActiveUser: any = window.localStorage.getItem(`user_${activeUserId}`);
+		return JSON.parse(getActiveUser);
+	}
+
 	removeActiveUser(): void {
 		window.localStorage.removeItem('activeUser')
 	}
@@ -38,6 +46,7 @@ export class UserService {
 		this.user = user;
 		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user.login));
 	}
+
 
 	setToken(token: string, store: boolean): void {
 		this.token = token;
