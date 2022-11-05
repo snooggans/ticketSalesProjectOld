@@ -68,7 +68,7 @@ export class TicketItemComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void{
-		this.userForm.controls['cardNumber'].setValue(this.user?.cardNumber)
+		this.userForm.controls['cardNumber'].setValue(this.userService.getActiveUserData().cardNumber)
 	}
 
 }

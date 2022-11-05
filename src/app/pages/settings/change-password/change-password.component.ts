@@ -36,7 +36,9 @@ export class ChangePasswordComponent implements OnInit {
 				if (this.oldPassword !== this.newPassword){
 				this.newUserData = {...activeUserData, psw: this.newPassword}
 				window.localStorage.setItem(`user_${activeUserData.login}`, JSON.stringify(this.newUserData));
-				console.log(this.newUserData)}else{
+				this.userService.setUser(this.newUserData);
+				console.log(this.newUserData)
+				}else{
 					console.log('пароль не изменился')
 				}
 			}else{
