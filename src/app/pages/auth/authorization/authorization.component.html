@@ -19,13 +19,6 @@
 		</div>
 	</div>
 
-	<div class="col-md-6 col-lg-2 my-3">
-		<div class="d-flex flex-column">
-			<p-checkbox name="vip" label="есть VIP карта" (onChange)="vipStatusSelected()" [binary]="true"
-			            [(ngModel)]="hasCardNumber"></p-checkbox>
-		</div>
-	</div>
-
 	<div class="col-md-6 col-lg-4">
 		<div class="d-flex flex-column" *ngIf="hasCardNumber">
 			<span>Номер карты</span>
@@ -36,7 +29,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-12 col-lg-6">
+	<div class="col-md-6 col-lg-6">
 		<div class="mt-4 d-block h-100">
 			<button (click)="onAuth()"
 			        pButton

@@ -4,7 +4,7 @@ import {ITour, ITourTypeSelect} from "../../../models/tours";
 import {TicketsStorageService} from "../../../services/tiсkets-storage/tickets-storage.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BlocksStyleDirective} from "../../../directive/blocks-style.directive";
-import {Subscription} from "rxjs";
+import {debounceTime, fromEvent, Subscription} from "rxjs";
 
 @Component({
 	selector: 'app-ticket-list',
@@ -19,6 +19,10 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 	tourUnsubscriber: Subscription;
 
 	@ViewChild('blockDirective', {read: BlocksStyleDirective}) blockDirective: BlocksStyleDirective;
+
+	@ViewChild('ticketSearch') ticketSearch: ElementRef;
+	searchTicketSub: Subscription;
+	ticketSearchValue: string;
 
 	constructor(private ticketService: TicketService,
 	            private ticketStorage: TicketsStorageService,
@@ -51,7 +55,7 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 			setTimeout(() => {
 				this.blockDirective.updateItems();
 				this.blockDirective.initStyle(0);
-			},300);
+			}, 300);
 
 		});
 
@@ -64,20 +68,31 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 		);
 	}
 
-	ngAfterViewInit(){
-
+	ngAfterViewInit() {
+		const fromEventObserver = fromEvent(this.ticketSearch.nativeElement, 'keyup', {passive: true});
+		this.searchTicketSub = fromEventObserver.pipe(
+		debounceTime(200)).subscribe(ev => {
+			if(this.ticketSearchValue){
+				this.tickets = this.ticketsCopy.filter(
+					el => el.name.toLowerCase().includes(this.ticketSearchValue.toLowerCase()));
+			}else {
+				this.tickets = [...this.ticketsCopy]
+			}
+		})
 	}
 
 	goToTicketInfoPage(item: ITour): void {
 		this.router.navigate([`/tickets/ticket/${item.id}`])
 	}
 
-	directiveRenderComplete(ev:boolean){
+	directiveRenderComplete(ev: boolean) {
 		this.blockDirective.initStyle(1)
 		this.blockCount = true;
 	}
 
+
 	ngOnDestroy() {
 		this.tourUnsubscriber.unsubscribe();
+		this.searchTicketSub.unsubscribe()
 	}
 }

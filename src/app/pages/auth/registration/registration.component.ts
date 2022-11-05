@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {IUser} from "../../../models/users";
 import {AuthService} from "../../../services/auth/auth.service";
+import {ConfigService} from "../../../services/config/config.service";
 
 @Component({
 	selector: 'app-registration',
@@ -14,25 +15,29 @@ export class RegistrationComponent implements OnInit {
 	psw: string;
 	pswRepeat: string;
 	email: string;
-	cardNumber: string
+	cardNumber: string;
+	showCardNumber: boolean;
 	isUserSave: boolean = true;
+
 
 	constructor(
 		private messageService: MessageService,
 		private authService: AuthService
-	) {}
-
-	ngOnInit(): void {
+	) {
 	}
 
-	userSave(user: IUser): void{
+	ngOnInit(): void {
+		this.showCardNumber = ConfigService.config.useUserCard
+	}
+
+	userSave(user: IUser): void {
 		const userString = JSON.stringify(user);
 		if (this.isUserSave) {
 			window.localStorage.setItem(`user_${user.login}`, userString)
 		}
 	}
 
-	registration(): void|boolean {
+	registration(): void | boolean {
 		if (this.psw !== this.pswRepeat) {
 			this.messageService.add({
 				severity: 'error',
@@ -56,7 +61,7 @@ export class RegistrationComponent implements OnInit {
 				detail: 'Поздравляем! Регистрация прошла успешно'
 			});
 			this.userSave(userObj)
-		}else {
+		} else {
 			this.messageService.add({
 				severity: 'warn',
 				summary: 'Логин уже занят',

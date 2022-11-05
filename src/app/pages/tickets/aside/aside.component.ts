@@ -3,6 +3,7 @@ import {IMenuType} from "../../../models/menuType";
 import {ITourTypeSelect} from "../../../models/tours";
 import {TicketService} from "../../../services/tickets/ticket.service";
 import {MessageService} from 'primeng/api';
+import {SettingsService} from "../../../services/settings/settings.service";
 
 @Component({
 	selector: 'app-aside',
@@ -23,7 +24,8 @@ export class AsideComponent implements OnInit {
 	@Output() updateMenuType: EventEmitter<IMenuType> = new EventEmitter();
 
 	constructor(private ticketService: TicketService,
-	            private messageService: MessageService) {
+	            private messageService: MessageService,
+	            private settingsService: SettingsService) {
 	}
 
 	ngOnInit(): void {
@@ -48,20 +50,10 @@ export class AsideComponent implements OnInit {
 		this.ticketService.updateTour({date: ev})
 	}
 
-	initRestError(): void {
-		this.ticketService.getError().subscribe(
-			{
-				next: (data) => {
-				},
-				error: (err) => {
-					console.log(err);
-					this.messageService.add({
-						severity: 'error',
-						summary: err.name,
-						detail: err.message
-					});
-				}
-			});
+	initSettingsData() {
+		this.settingsService.loadUserSettingsSubject({
+			saveToken: false
+		})
 	}
 
 }

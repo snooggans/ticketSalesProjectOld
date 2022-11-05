@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SettingsServiceService} from "../../services/settings/settings-service.service";
-import {Subject, Subscription} from "rxjs";
+import {SettingsService} from "../../services/settings/settings.service";
+import {Subject, Subscription, takeUntil} from "rxjs";
+import {ISettings} from "../../models/settings";
 
 @Component({
 	selector: 'app-settings',
@@ -9,27 +10,24 @@ import {Subject, Subscription} from "rxjs";
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 
-	private subjectScope: Subject<string>;
-	private subjectUnsubscribe: Subscription;
+	private subjectForSubscribe = new Subject();
 
-	constructor(private settings: SettingsServiceService) {
+	constructor(private settingsService: SettingsService) {
 	}
 
 	ngOnInit(): void {
-		this.subjectScope = this.settings.getSubject();
-		this.subjectScope.subscribe((data: string) => {
-			console.log('data', data)
-		})
-		this.subjectScope.next('subData not for subscribe');
+		this.settingsService.loadUserSettings().pipe(takeUntil(this.subjectForSubscribe)).subscribe((data) => {
+			console.log('settings data', data)
+		});
 
-		this.subjectUnsubscribe = this.subjectScope.subscribe((data: string) => {
-			console.log('data', data)
+		this.settingsService.getSettingsSubjectObservable().pipe(takeUntil(this.subjectForSubscribe)).subscribe((data) => {
+			console.log('settings data from subject', data)
 		})
-
 	}
 
-	ngOnDestroy() {
-		this.subjectUnsubscribe.unsubscribe()
+	ngOnDestroy(): void {
+		this.subjectForSubscribe.next(true);
+		this.subjectForSubscribe.complete()
 	}
 
 }

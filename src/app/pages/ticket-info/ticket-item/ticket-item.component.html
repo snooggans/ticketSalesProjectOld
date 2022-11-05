@@ -64,4 +64,15 @@
 		</form>
 	</div>
 
+	<div class="nearest-tours">
+		<h2 class="my-5">Похожие туры</h2>
+		<p-carousel [value]="nearestTours">
+			<ng-template let-tour pTemplate="item">
+				<div class="nearest-tour-img"
+				     [ngStyle]="{background: 'url('+' /assets/img/'+ tour.img +') center / cover'}"></div>
+				<div class="h5 mt-2 text-center">{{tour.name}}</div>
+			</ng-template>
+		</p-carousel>
+	</div>
+
 </div>

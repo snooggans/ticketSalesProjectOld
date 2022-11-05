@@ -4,6 +4,7 @@ import {IUser} from "../../../models/users";
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
 import {UserService} from "../../../services/user/user.service";
+import {ConfigService} from "../../../services/config/config.service";
 
 @Component({
 	selector: 'app-authorization',
@@ -30,7 +31,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.authTextButton = "Авторизоваться"
+		this.authTextButton = "Авторизоваться";
+		this.hasCardNumber = ConfigService.config.useUserCard;
 	}
 
 	ngOnDestroy(): void {

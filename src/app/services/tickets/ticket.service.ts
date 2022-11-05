@@ -39,4 +39,11 @@ export class TicketService {
 		return this.ticketServiceRest.getRestError();
 	}
 
+	getNearestTickets(): Observable<any>{
+		return this.ticketServiceRest.getNearestTickets()
+	}
+
+	getLocationList(): Observable<any>{
+		return this.ticketServiceRest.getLocationList()
+	}
 }

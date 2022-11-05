@@ -16,6 +16,7 @@ import {SettingsComponent} from "../settings/settings.component";
 import {CalendarModule} from "primeng/calendar";
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
+import {InputTextModule} from "primeng/inputtext";
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {MessageService} from "primeng/api";
 		DropdownModule,
 		FormsModule,
 		CalendarModule,
-		ToastModule
+		ToastModule,
+		InputTextModule
 	],
 	providers: [MessageService]
 })

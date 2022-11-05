@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 	private timerInterval: number;
 	public user: IUser;
 	public userLogin: string;
-	private isExtMenu: boolean = false;
+	private settingsActive: boolean = false;
 	@Input() menuType: IMenuType;
 	constructor(private userService: UserService) {
 	}
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 	}
 
 	ngOnChanges(ev: SimpleChanges): void{
-		this.isExtMenu = this.menuType?.type === "extended";
+		this.settingsActive = this.menuType?.type === "extended";
 		this.items = this.initMenuItems()
 	}
 
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			{
 				label: 'Настройки',
 				routerLink: ['settings'],
-				visible: this.isExtMenu
+				visible: this.settingsActive
 			},
 			{
 				label: 'Выйти',
