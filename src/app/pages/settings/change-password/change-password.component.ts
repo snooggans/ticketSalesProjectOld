@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {IUser} from "../../../models/users";
+import {MessageService} from "primeng/api";
 
 @Component({
 	selector: 'app-change-password',
@@ -18,7 +19,9 @@ export class ChangePasswordComponent implements OnInit {
 	private newUserData: IUser;
 
 	constructor(private userService: UserService,
-	            private authService: AuthService) {
+	            private authService: AuthService,
+	            private messageService: MessageService
+	            ) {
 	}
 
 	changePassword(): void {
@@ -30,19 +33,35 @@ export class ChangePasswordComponent implements OnInit {
 		this.newPasswordCheck = this.changePasswordForm.controls['newPasswordCheck'].value
 
 		if (activeUserData.psw !== this.changePasswordForm.controls['oldPassword'].value){
-			console.log('wrong old password');
+			this.messageService.add({
+				severity: 'error',
+				summary: 'Неверный пароль',
+				detail: 'Введен неверный текущий пароль'
+			});
 		}else {
 			if (this.newPassword === this.newPasswordCheck && this.oldPassword){
 				if (this.oldPassword !== this.newPassword){
 				this.newUserData = {...activeUserData, psw: this.newPassword}
 				window.localStorage.setItem(`user_${activeUserData.login}`, JSON.stringify(this.newUserData));
 				this.userService.setUser(this.newUserData);
-				console.log(this.newUserData)
+
+				this.messageService.add({
+						severity: 'success',
+						summary: 'Пароль успешно изменён',
+						detail: `Ваш новый пароль: ${this.newUserData.psw}`
+				});
+
 				}else{
-					console.log('пароль не изменился')
+					this.messageService.add({
+						severity: 'error',
+						summary: 'Пароль не изменился',
+					});
 				}
 			}else{
-				console.log('Пароли не совпадают')
+				this.messageService.add({
+					severity: 'error',
+					summary: 'Пароли не совпадают',
+				});
 			}
 		}
 	}

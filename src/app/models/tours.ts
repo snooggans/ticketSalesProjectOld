@@ -23,3 +23,7 @@ export interface ITourLocation {
 	name: string,
 	id: string
 }
+
+export interface INearestTourWithLocation extends INearestTour{
+	location?: ITourLocation
+}

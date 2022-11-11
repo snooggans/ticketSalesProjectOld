@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TicketRestService} from "../rest/ticket-rest.service";
-import {ITour, ITourTypeSelect} from "../../models/tours";
-import {map, Observable, Subject} from "rxjs";
+import {INearestTour, INearestTourWithLocation, ITour, ITourLocation, ITourTypeSelect} from "../../models/tours";
+import {find, map, Observable, Subject, toArray} from "rxjs";
 
 
 @Injectable({
@@ -44,6 +44,22 @@ export class TicketService {
 	}
 
 	getLocationList(): Observable<any>{
-		return this.ticketServiceRest.getLocationList()
+		return this.ticketServiceRest.getLocationList();
 	}
-}
+
+	getNearestTourWithLocation(tours: INearestTour[],locations: ITourLocation[]): INearestTourWithLocation[]{
+			const toursWithLoc: INearestTourWithLocation[] = [];
+			tours.forEach(tour =>{
+			const newTour = <INearestTourWithLocation> {...tour};
+			newTour.location = <INearestTourWithLocation> locations.find(loc =>
+				tour.locationId === loc.id);
+			toursWithLoc.push(newTour);
+			})
+			return toursWithLoc;
+	}
+
+	getRandomNearestEvent(type: number): Observable<INearestTour>{
+		return this.ticketServiceRest.getRandomNearestEvent(type);
+	}
+
+	}
