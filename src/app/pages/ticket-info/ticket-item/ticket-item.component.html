@@ -21,7 +21,9 @@
 			    <input id="first-name" type="text"
 			           formControlName="firstName"
 			           pInputText>
-			    <label for="first-name">Имя</label>
+			    <ng-container *ngTemplateOutlet="userFormInput;
+			              context: {inputId: 'first-name', label: 'Имя'}"
+			    ></ng-container>
 			</span>
 
 			<span class="p-float-label mt-5">
@@ -59,15 +61,16 @@
 			    <label for="citizen">Гражданство</label>
 			</span>
 			<button class="mt-5" pButton type="submit"
+			        (click)="initTour()"
 			        [disabled]="!userForm.valid"
-			        label="Перейти к оформлению" ></button>
+			        label="Перейти к оформлению"></button>
 		</form>
 	</div>
 
 	<div class="mt-5">
 		<h4>похожие туры</h4>
 		<div>
-			<input #ticketSearch [(ngModel)]="ticketSearchValue" type="text" pInputText >
+			<input #ticketSearch [(ngModel)]="ticketSearchValue" type="text" pInputText>
 		</div>
 	</div>
 
@@ -83,3 +86,8 @@
 	</div>
 
 </div>
+
+
+<ng-template #userFormInput let-inputId="inputId" let-label="label">
+		<label for="{{inputId}}">{{label}}</label>
+</ng-template>

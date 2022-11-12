@@ -39,7 +39,7 @@
 		</div>
 	</div>
 
-	<div *ngIf="showCardNumber" class="col-md-6">
+	<div *ngIf="showCardNumber; else noCard" class="col-md-6">
 		<div class="d-flex flex-column">
 			<span>Номер карты</span>
 			<input type="text"
@@ -70,3 +70,7 @@
 <div class="mt-4">
 
 </div>
+
+<ng-template #noCard>
+	<div class="ml-1 my-3">Нет карты</div>
+</ng-template>

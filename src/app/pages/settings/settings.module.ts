@@ -7,22 +7,27 @@ import {ChangePasswordComponent} from "./change-password/change-password.compone
 import {InputTextModule} from "primeng/inputtext";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
+import { StatisticComponent } from './statistic/statistic.component';
+import {TableModule} from "primeng/table";
 
 
 
 
 @NgModule({
 	declarations: [
-		ChangePasswordComponent
+		ChangePasswordComponent,
+  StatisticComponent
 	],
 	exports: [
-		ChangePasswordComponent
+		ChangePasswordComponent,
+		StatisticComponent
 	],
 	imports: [
 		CommonModule,
 		InputTextModule,
 		ReactiveFormsModule,
 		ButtonModule,
+		TableModule,
 	]
 })
 export class SettingsModule { }

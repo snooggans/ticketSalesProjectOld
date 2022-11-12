@@ -39,7 +39,13 @@ export class TicketItemComponent implements OnInit {
 	}
 
 	onSubmit(){
-		console.log('submit')
+	}
+
+	initTour(): void{
+		const userData = this.userForm.getRawValue();
+		const postData = {...this.ticket, ...userData};
+
+		this.ticketService.sendTourData(postData).subscribe();
 	}
 
 	loadTicket(){

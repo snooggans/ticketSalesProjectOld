@@ -8,9 +8,10 @@ import {INearestTour, ITour, ITourLocation} from "../../models/tours";
 })
 export class TicketRestService {
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {
+	}
 
-	getTickets(): Observable<ITour[]>{
+	getTickets(): Observable<ITour[]> {
 		return this.http.get<ITour[]>('https://62b9e756ff109cd1dc9dae16.mockapi.io/apiv/v1/tours/')
 	}
 
@@ -27,7 +28,7 @@ export class TicketRestService {
 	}
 
 	getRandomNearestEvent(type: number): Observable<INearestTour> {
-		switch (type){
+		switch (type) {
 			case 0:
 				return this.http.get<INearestTour>('/assets/mocks/nearestTours1.json')
 			case 1:
@@ -37,6 +38,10 @@ export class TicketRestService {
 			default:
 				return this.http.get<INearestTour>('/assets/mocks/nearestTours2.json')
 		}
+	}
+
+	sendTourData(data: any ){
+		return this.http.post('/assets/mocks/nearestTours2.json', data)
 	}
 
 

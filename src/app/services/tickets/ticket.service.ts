@@ -17,49 +17,54 @@ export class TicketService {
 	constructor(private ticketServiceRest: TicketRestService) {
 	}
 
-	getTicketTypeObservable(): Observable<ITourTypeSelect>{
+	getTicketTypeObservable(): Observable<ITourTypeSelect> {
 		return this.ticketSubject.asObservable()
 	}
 
-	updateTour(type: ITourTypeSelect): void{
+	updateTour(type: ITourTypeSelect): void {
 		this.ticketSubject.next(type);
 	}
 
 	getTickets(): Observable<ITour[]> {
 		return this.ticketServiceRest.getTickets()
-			.pipe(map(
-				(value) =>{
-					const singleTours = value.filter(el => el.type === "single");
-					return value.concat(singleTours)
-				}
-			))
+		.pipe(map(
+			(value) => {
+				const singleTours = value.filter(el => el.type === "single");
+				return value.concat(singleTours)
+			}
+		))
 	}
 
-	getError(): Observable<any>{
+	getError(): Observable<any> {
 		return this.ticketServiceRest.getRestError();
 	}
 
-	getNearestTickets(): Observable<any>{
+	getNearestTickets(): Observable<any> {
 		return this.ticketServiceRest.getNearestTickets()
 	}
 
-	getLocationList(): Observable<any>{
+	getLocationList(): Observable<any> {
 		return this.ticketServiceRest.getLocationList();
 	}
 
-	getNearestTourWithLocation(tours: INearestTour[],locations: ITourLocation[]): INearestTourWithLocation[]{
-			const toursWithLoc: INearestTourWithLocation[] = [];
-			tours.forEach(tour =>{
-			const newTour = <INearestTourWithLocation> {...tour};
-			newTour.location = <INearestTourWithLocation> locations.find(loc =>
+	getNearestTourWithLocation(tours: INearestTour[], locations: ITourLocation[]): INearestTourWithLocation[] {
+		const toursWithLoc: INearestTourWithLocation[] = [];
+		tours.forEach(tour => {
+			const newTour = <INearestTourWithLocation>{...tour};
+			newTour.location = <INearestTourWithLocation>locations.find(loc =>
 				tour.locationId === loc.id);
 			toursWithLoc.push(newTour);
-			})
-			return toursWithLoc;
+		})
+		return toursWithLoc;
 	}
 
-	getRandomNearestEvent(type: number): Observable<INearestTour>{
+	getRandomNearestEvent(type: number): Observable<INearestTour> {
 		return this.ticketServiceRest.getRandomNearestEvent(type);
 	}
 
+	sendTourData(data: any): Observable<any> {
+		return this.ticketServiceRest.sendTourData(data);
 	}
+
+
+}
