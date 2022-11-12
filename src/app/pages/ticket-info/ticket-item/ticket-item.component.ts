@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {INearestTour, INearestTourWithLocation, ITour, ITourLocation, ITourTypeSelect} from "../../../models/tours";
+import {INearestTourWithLocation, ITour, ITourLocation} from "../../../models/tours";
 import {ActivatedRoute} from "@angular/router";
 import {TicketsStorageService} from "../../../services/tiсkets-storage/tickets-storage.service";
 import {TicketService} from "../../../services/tickets/ticket.service";
@@ -15,7 +15,7 @@ import {forkJoin, fromEvent, Subscription} from "rxjs";
 })
 export class TicketItemComponent implements OnInit {
 
-	ticket: ITour | undefined;
+	ticket: ITour ;
 	user: IUser;
 	userForm: FormGroup;
 
@@ -74,9 +74,9 @@ export class TicketItemComponent implements OnInit {
 		this.userForm = new FormGroup({
 			firstName: new FormControl('', [ Validators.required, Validators.minLength(2)]),
 			lastName: new FormControl('', {validators: Validators.required}),
-			cardNumber: new FormControl(),
+			cardNumber: new FormControl(this.userService.getActiveUserData().cardNumber),
 			birthDay: new FormControl(),
-			age: new FormControl(),
+			age: new FormControl(18),
 			citizen: new FormControl('Россия')
 		})
 
@@ -100,10 +100,8 @@ export class TicketItemComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void{
-		this.userForm.controls['cardNumber'].setValue(this.userService.getActiveUserData().cardNumber);
-
 		const fromEventObserver = fromEvent(this.ticketSearch.nativeElement, 'keyup');
-		this.searchTicketSub = fromEventObserver.subscribe((ev: any) =>{
+		this.searchTicketSub = fromEventObserver.subscribe(() =>{
 			this.initSearchTour()
 		})
 	}
