@@ -12,6 +12,7 @@ export class TicketsStorageService {
 	constructor(private ticketService: TicketService) {}
 
 	setStorage(data: ITour[]): void{
+        data.forEach(t=>t.img = 'http://localhost:3000/public/'+ t.img)
 		this.ticketStorage = data;
 	}
 
@@ -27,7 +28,7 @@ export class TicketsStorageService {
 			}
 		);
 
-		const activeTicket = this.ticketStorage.find(el => el.id === id)
+		const activeTicket = this.ticketStorage.find(el => el._id === id)
 		window.localStorage.setItem(`active_ticket`, JSON.stringify(activeTicket));
 	}
 

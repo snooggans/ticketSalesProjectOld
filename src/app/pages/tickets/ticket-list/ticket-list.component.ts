@@ -30,9 +30,10 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-
+		this.ticketService.ticketUpdateSubject$.subscribe(data => {
+			this.tickets = data;
+		})
 		this.tourUnsubscriber = this.ticketService.ticketType$.subscribe((data: ITourTypeSelect) => {
-			console.log('data', data);
 
 			let ticketType: string;
 			switch (data.value) {
@@ -71,19 +72,24 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngAfterViewInit() {
 		const fromEventObserver = fromEvent(this.ticketSearch.nativeElement, 'keyup', {passive: true});
 		this.searchTicketSub = fromEventObserver.pipe(
-		debounceTime(200)).subscribe(ev => {
-			if(this.ticketSearchValue){
+			debounceTime(200)).subscribe(ev => {
+			if (this.ticketSearchValue) {
 				this.tickets = this.ticketsCopy.filter(
 					el => el.name.toLowerCase().includes(this.ticketSearchValue.toLowerCase()));
-			}else {
+			} else {
 				this.tickets = [...this.ticketsCopy]
 			}
 		})
 	}
 
 	goToTicketInfoPage(item: ITour): void {
-		this.router.navigate([`/tickets/ticket/${item.id}`])
+		this.router.navigate(
+			[`/tickets/ticket/${item._id}`])
 	}
+
+	//         [`/tickets/ticket`],
+	//         {queryParams:{id: item._id}})
+	// }
 
 	directiveRenderComplete(ev: boolean) {
 		this.blockDirective.initStyle(1)

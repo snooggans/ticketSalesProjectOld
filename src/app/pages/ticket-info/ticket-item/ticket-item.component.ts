@@ -7,6 +7,7 @@ import {IUser} from "../../../models/users";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user/user.service";
 import {forkJoin, fromEvent, Subscription} from "rxjs";
+import {IOrder} from "../../../models/order";
 
 @Component({
 	selector: 'app-ticket-item',
@@ -23,6 +24,7 @@ export class TicketItemComponent implements OnInit {
 	toursLocation: ITourLocation[];
 	toursWithLocation: INearestTourWithLocation[];
 	routeIdParam: any = this.route.snapshot.paramMap.get('id');
+    queryIdParam = this.route.snapshot.queryParamMap.get('id');
 
 	@ViewChild('ticketSearch') ticketSearch: ElementRef;
 
@@ -42,14 +44,28 @@ export class TicketItemComponent implements OnInit {
 		const userData = this.userForm.getRawValue();
 		const postData = {...this.ticket, ...userData};
 
-		this.ticketService.sendTourData(postData).subscribe();
+        const userId = this.userService.getUser()?.id || null;
 
-		console.log(postData)
+        const postObj: IOrder = {
+            age: postData.age,
+            birthDay: postData.birthDay,
+            cardNumber: postData.cardNumber,
+            tourId: postData._id,
+            userId: userId
+        }
+        this.ticketService.sendTourData(postObj).subscribe()
 	}
 
 	loadTicket(){
+        const paramValueId = this.routeIdParam || this.queryIdParam;
+        if(paramValueId){
+            this.ticketService.getTicketById(paramValueId).subscribe(data=>{
+                data.img = 'http://localhost:3000/public/'+ data.img;
+                this.ticket = data
+            })
+        }
 		this.ticketStorage.setActiveTicket(this.routeIdParam);
-		this.ticket = this.ticketStorage.getActiveTicket();
+		// this.ticket = this.ticketStorage.getActiveTicket();
 	}
 
 	initSearchTour(): void{
@@ -73,7 +89,7 @@ export class TicketItemComponent implements OnInit {
 		this.userForm = new FormGroup({
 			firstName: new FormControl('', [ Validators.required, Validators.minLength(2)]),
 			lastName: new FormControl('', {validators: Validators.required}),
-			cardNumber: new FormControl(this.userService.getActiveUserData().cardNumber),
+			cardNumber: new FormControl(this.userService.getActiveUserData()?.cardNumber),
 			birthDay: new FormControl(),
 			age: new FormControl(18),
 			citizen: new FormControl('Россия')

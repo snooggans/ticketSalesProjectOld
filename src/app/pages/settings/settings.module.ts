@@ -9,6 +9,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import { StatisticComponent } from './statistic/statistic.component';
 import {TableModule} from "primeng/table";
+import { TourLoaderComponent } from './tour-loader/tour-loader.component';
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {FileUploadModule} from "primeng/fileupload";
 
 
 
@@ -16,18 +19,22 @@ import {TableModule} from "primeng/table";
 @NgModule({
 	declarations: [
 		ChangePasswordComponent,
-  StatisticComponent
+  StatisticComponent,
+  TourLoaderComponent
 	],
-	exports: [
-		ChangePasswordComponent,
-		StatisticComponent
-	],
+    exports: [
+        ChangePasswordComponent,
+        StatisticComponent,
+        TourLoaderComponent
+    ],
 	imports: [
 		CommonModule,
 		InputTextModule,
 		ReactiveFormsModule,
 		ButtonModule,
 		TableModule,
+		InputTextareaModule,
+		FileUploadModule,
 	]
 })
 export class SettingsModule { }

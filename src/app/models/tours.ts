@@ -1,5 +1,6 @@
 export interface ITour {
-	id: string,
+	_id: string,
+    id: string,
 	name: string,
 	description: string,
 	tourOperator: string,

@@ -2,7 +2,7 @@
 	<button class="btn btn-outline-dark mb-5" routerLink="/tickets/tickets-list">Назад</button>
 	<div *ngIf="ticket" class="row">
 		<div class="col-lg-6">
-			<img src="/assets/img/{{ticket.img}}" alt="{{ticket.name}}" class="ticket-info__img w-100">
+			<img src="{{ticket.img}}" alt="{{ticket.name}}" class="ticket-info__img w-100">
 		</div>
 		<div class="col-lg-6">
 			<div class="ticket-info">

@@ -19,6 +19,7 @@ import {MessageService} from "primeng/api";
 import {InputTextModule} from "primeng/inputtext";
 import {TabViewModule} from "primeng/tabview";
 import {SettingsModule} from "../settings/settings.module";
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {SettingsModule} from "../settings/settings.module";
 		TicketListComponent,
 		SettingsComponent,
 		AsideComponent,
-		BlocksStyleDirective
+		BlocksStyleDirective,
+        OrdersComponent
 	],
 	imports: [
 		CommonModule,

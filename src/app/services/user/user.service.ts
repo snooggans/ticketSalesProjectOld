@@ -13,7 +13,8 @@ export class UserService {
 	}
 
 	getUser(): IUser {
-		return this.user
+        let getActiveUser: any = window.localStorage.getItem('activeUser');
+		return JSON.parse(getActiveUser)
 	}
 
 	setActiveUser(): string {
@@ -44,7 +45,7 @@ export class UserService {
 
 	setUser(user: IUser): void {
 		this.user = user;
-		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user.login));
+		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user));
 	}
 
 

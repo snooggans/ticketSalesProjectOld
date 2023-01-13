@@ -1,0 +1,14 @@
+<div class="row"
+     #tourWrap>
+    <div *ngFor="let order of orders" class="col-md-6 col-xxl-4 mb-4 ticket-item">
+       <div class="mb-5">
+           <p>ID заказа: {{order._id}}</p>
+           <p>ID пользователя: {{order.userId}}</p>
+           <p>ID тура: {{order.tourId}}</p>
+           <p>Возраст: {{order.age}}</p>
+           <p>Дата рождения: {{order.birthDay}}</p>
+           <p>Номер карты: {{order.cardNumber}}</p>
+       </div>
+
+    </div>
+</div>
