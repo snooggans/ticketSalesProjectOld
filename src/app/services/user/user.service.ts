@@ -19,7 +19,7 @@ export class UserService {
 
 	setActiveUser(): string {
 		let getActiveUser: any = window.localStorage.getItem('activeUser');
-		return JSON.parse(getActiveUser);
+		return JSON.parse(getActiveUser).login;
 	}
 
 	getActiveUserData(): IUser{
