@@ -34,7 +34,16 @@ export class TourLoaderComponent implements OnInit {
 				formParams.append(prop, tourDataRow[prop])
 			}
 		}
-		this.ticketService.createTour(formParams).subscribe(data=>{})
+		this.ticketService.createTour(formParams).subscribe(data=>{});
+
+		this.tourForm = new FormGroup({
+			name: new FormControl('', {validators: Validators.required}),
+			description: new FormControl('', {validators: Validators.minLength(10)}),
+			operator: new FormControl(),
+			price: new FormControl(),
+			location: new FormControl(),
+			img: new FormControl()
+		})
 	}
 
 	selectFile(ev: any): void {
