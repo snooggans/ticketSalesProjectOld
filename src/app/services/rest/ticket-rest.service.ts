@@ -27,11 +27,11 @@ export class TicketRestService {
 	}
 
 	getNearestTickets(): Observable<INearestTour[]> {
-		return this.http.get<INearestTour[]>('http://localhost:3000/tour-item/');
+		return this.http.get<INearestTour[]>('http://localhost:3000/nearest-tours/');
 	}
 
 	getTicketsSearch(name:string): Observable<INearestTour[]> {
-		return this.http.get<INearestTour[]>('http://localhost:3000/tour-item/'+name);
+		return this.http.get<INearestTour[]>('http://localhost:3000/tour-search/'+name);
 	}
 
 	getLocationList(): Observable<ITourLocation[]> {
