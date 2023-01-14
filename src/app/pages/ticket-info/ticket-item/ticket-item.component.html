@@ -79,7 +79,7 @@
 			<ng-template let-tour pTemplate="item">
 				<div class="nearest-tour-img"
 				     [ngStyle]="{background: 'url('+' http://localhost:3000/public/'+ tour.img +') center / cover'}"></div>
-				<div class="h5 mt-2 text-center">{{tour.name}}. Регион: </div>
+				<div class="h5 mt-2 text-center">{{tour.name}}. Регион: {{tour.location}} </div>
 			</ng-template>
 		</p-carousel>
 	</div>

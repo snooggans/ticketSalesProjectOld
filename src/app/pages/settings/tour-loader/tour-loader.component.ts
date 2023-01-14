@@ -21,6 +21,7 @@ export class TourLoaderComponent implements OnInit {
 			description: new FormControl('', {validators: Validators.minLength(10)}),
 			operator: new FormControl(),
 			price: new FormControl(),
+			location: new FormControl(),
 			img: new FormControl()
 		})
 	}

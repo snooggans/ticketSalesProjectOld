@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {INearestTourWithLocation, ITour, ITourLocation} from "../../../models/tours";
+import {ITour, ITourLocation} from "../../../models/tours";
 import {ActivatedRoute} from "@angular/router";
 import {TicketsStorageService} from "../../../services/tiсkets-storage/tickets-storage.service";
 import {TicketService} from "../../../services/tickets/ticket.service";
@@ -17,12 +17,13 @@ import {IOrder} from "../../../models/order";
 export class TicketItemComponent implements OnInit {
 
 	ticket: ITour ;
+	location: string;
 	user: IUser;
 	userForm: FormGroup;
 
-	nearestTours: INearestTourWithLocation[];
-	toursLocation: ITourLocation[];
-	toursWithLocation: INearestTourWithLocation[];
+	nearestTours: ITour[];
+	// toursLocation: ITourLocation[];
+	// toursWithLocation: INearestTourWithLocation[];
 	routeIdParam: any = this.route.snapshot.paramMap.get('id');
     queryIdParam = this.route.snapshot.queryParamMap.get('id');
 
@@ -61,7 +62,8 @@ export class TicketItemComponent implements OnInit {
         if(paramValueId){
             this.ticketService.getTicketById(paramValueId).subscribe(data=>{
                 data.img = 'http://localhost:3000/public/'+ data.img;
-                this.ticket = data
+                this.ticket = data;
+				this.location = data.location
             })
         }
 		this.ticketStorage.setActiveTicket(this.routeIdParam);
@@ -74,7 +76,7 @@ export class TicketItemComponent implements OnInit {
 			if (this.ticketSearchValue) {
 				this.ticketService.getTicketsSearch(this.ticketSearchValue).subscribe(data => this.nearestTours = data);
 			}else{
-				this.ticketService.getNearestTickets().subscribe( data => {
+				this.ticketService.getNearestTickets(this.location).subscribe( data => {
 					this.nearestTours = data;
 				})
 			}
@@ -100,7 +102,7 @@ export class TicketItemComponent implements OnInit {
 		})
 
 		// Nearest Tours
-			this.ticketService.getNearestTickets().subscribe( data => {
+			this.ticketService.getNearestTickets(this.location).subscribe( data => {
 			this.nearestTours = data;
 		})
 

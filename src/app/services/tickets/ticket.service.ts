@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TicketRestService} from "../rest/ticket-rest.service";
-import {INearestTour, INearestTourWithLocation, ITour, ITourLocation, ITourTypeSelect} from "../../models/tours";
+import {INearestTour, ITour, ITourLocation, ITourTypeSelect} from "../../models/tours";
 import {find, map, Observable, Subject, toArray} from "rxjs";
 
 
@@ -49,32 +49,32 @@ export class TicketService {
 		return this.ticketServiceRest.getRestError();
 	}
 
-	getNearestTickets(): Observable<any> {
-		return this.ticketServiceRest.getNearestTickets()
+	getNearestTickets(loc:string): Observable<any> {
+		return this.ticketServiceRest.getNearestTickets(loc)
 	}
 
 	getTicketsSearch(name:string): Observable<any> {
 		return this.ticketServiceRest.getTicketsSearch(name)
 	}
 
-	getLocationList(): Observable<any> {
-		return this.ticketServiceRest.getLocationList();
-	}
-
-	getNearestTourWithLocation(tours: INearestTour[], locations: ITourLocation[]): INearestTourWithLocation[] {
-		const toursWithLoc: INearestTourWithLocation[] = [];
-		tours.forEach(tour => {
-			const newTour = <INearestTourWithLocation>{...tour};
-			newTour.location = <INearestTourWithLocation>locations.find(loc =>
-				tour.locationId === loc.id);
-			toursWithLoc.push(newTour);
-		})
-		return toursWithLoc;
-	}
-
-	getRandomNearestEvent(type: number): Observable<INearestTour> {
-		return this.ticketServiceRest.getRandomNearestEvent(type);
-	}
+	// getLocationList(): Observable<any> {
+	// 	return this.ticketServiceRest.getLocationList();
+	// }
+	//
+	// getNearestTourWithLocation(tours: INearestTour[], locations: ITourLocation[]): ITour[] {
+	// 	const toursWithLoc: ITour[] = [];
+	// 	tours.forEach(tour => {
+	// 		const newTour = <ITour>{...tour};
+	// 		newTour.location = <ITour>locations.find(loc =>
+	// 			tour.locationId === loc.id);
+	// 		toursWithLoc.push(newTour);
+	// 	})
+	// 	return toursWithLoc;
+	// }
+	//
+	// getRandomNearestEvent(type: number): Observable<INearestTour> {
+	// 	return this.ticketServiceRest.getRandomNearestEvent(type);
+	// }
 
 	sendTourData(data: any): Observable<any> {
 		return this.ticketServiceRest.sendTourData(data);
