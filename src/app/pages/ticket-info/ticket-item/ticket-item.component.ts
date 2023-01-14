@@ -63,7 +63,10 @@ export class TicketItemComponent implements OnInit {
             this.ticketService.getTicketById(paramValueId).subscribe(data=>{
                 data.img = 'http://localhost:3000/public/'+ data.img;
                 this.ticket = data;
-				this.location = data.location
+				this.location = data.location;
+	            this.ticketService.getNearestTickets(this.location).subscribe( data => {
+		            this.nearestTours = data;
+	            })
             })
         }
 		this.ticketStorage.setActiveTicket(this.routeIdParam);
