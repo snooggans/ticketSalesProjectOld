@@ -53,6 +53,10 @@ export class TicketService {
 		return this.ticketServiceRest.getNearestTickets()
 	}
 
+	getTicketsSearch(name:string): Observable<any> {
+		return this.ticketServiceRest.getTicketsSearch(name)
+	}
+
 	getLocationList(): Observable<any> {
 		return this.ticketServiceRest.getLocationList();
 	}

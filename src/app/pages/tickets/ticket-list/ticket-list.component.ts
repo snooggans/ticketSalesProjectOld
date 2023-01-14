@@ -87,10 +87,6 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 			[`/tickets/ticket/${item._id}`])
 	}
 
-	//         [`/tickets/ticket`],
-	//         {queryParams:{id: item._id}})
-	// }
-
 	directiveRenderComplete(ev: boolean) {
 		this.blockDirective.initStyle(1)
 		this.blockCount = true;

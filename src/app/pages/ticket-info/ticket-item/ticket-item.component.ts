@@ -6,7 +6,7 @@ import {TicketService} from "../../../services/tickets/ticket.service";
 import {IUser} from "../../../models/users";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user/user.service";
-import {forkJoin, fromEvent, Subscription} from "rxjs";
+import {debounceTime, forkJoin, fromEvent, Subscription} from "rxjs";
 import {IOrder} from "../../../models/order";
 
 @Component({
@@ -65,20 +65,24 @@ export class TicketItemComponent implements OnInit {
             })
         }
 		this.ticketStorage.setActiveTicket(this.routeIdParam);
-		// this.ticket = this.ticketStorage.getActiveTicket();
 	}
 
 	initSearchTour(): void{
-		const type = Math.floor(Math.random() * this.searchTypes.length);
+		const fromEventObserver = fromEvent(this.ticketSearch.nativeElement, 'keyup', {passive: true});
+		this.searchTicketSub = fromEventObserver.pipe(
+			debounceTime(200)).subscribe(ev => {
+			if (this.ticketSearchValue) {
+				this.ticketService.getTicketsSearch(this.ticketSearchValue).subscribe(data => this.nearestTours = data);
+			}else{
+				this.ticketService.getNearestTickets().subscribe( data => {
+					this.nearestTours = data;
+				})
+			}
+		})
 
 		if(this.ticketRestSub && !this.searchTicketSub.closed){
 			this.ticketRestSub.unsubscribe()
 		}
-
-		this.ticketRestSub = this.ticketService.getRandomNearestEvent(type).subscribe((data)=>{
-			this.toursWithLocation = this.ticketService.getNearestTourWithLocation([data], this.toursLocation)
-		})
-
 	}
 
 	ngOnInit(): void {
@@ -96,13 +100,8 @@ export class TicketItemComponent implements OnInit {
 		})
 
 		// Nearest Tours
-		forkJoin([
-			this.ticketService.getNearestTickets(),   // data[0]
-			this.ticketService.getLocationList()   // data[1]
-		]).subscribe( data => {
-			this.nearestTours = data[0];
-			this.toursLocation = data[1];
-			this.toursWithLocation = this.ticketService.getNearestTourWithLocation(data[0],data[1])
+			this.ticketService.getNearestTickets().subscribe( data => {
+			this.nearestTours = data;
 		})
 
 		// Load Tickets
@@ -118,7 +117,6 @@ export class TicketItemComponent implements OnInit {
 		const fromEventObserver = fromEvent(this.ticketSearch.nativeElement, 'keyup');
 		this.searchTicketSub = fromEventObserver.subscribe(() =>{
 			this.initSearchTour()
-		})
+		});
 	}
-
 }

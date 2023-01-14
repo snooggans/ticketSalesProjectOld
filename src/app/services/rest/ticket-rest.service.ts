@@ -27,7 +27,11 @@ export class TicketRestService {
 	}
 
 	getNearestTickets(): Observable<INearestTour[]> {
-		return this.http.get<INearestTour[]>('https://62b9e756ff109cd1dc9dae16.mockapi.io/apiv/v1/nearestTours/');
+		return this.http.get<INearestTour[]>('http://localhost:3000/tour-item/');
+	}
+
+	getTicketsSearch(name:string): Observable<INearestTour[]> {
+		return this.http.get<INearestTour[]>('http://localhost:3000/tour-item/'+name);
 	}
 
 	getLocationList(): Observable<ITourLocation[]> {
