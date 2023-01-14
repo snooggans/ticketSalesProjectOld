@@ -14,8 +14,7 @@ export class TourLoaderComponent implements OnInit {
 	constructor(private ticketService: TicketService) {
 	}
 
-	ngOnInit(): void {
-
+	initForm(){
 		this.tourForm = new FormGroup({
 			name: new FormControl('', {validators: Validators.required}),
 			description: new FormControl('', {validators: Validators.minLength(10)}),
@@ -24,6 +23,12 @@ export class TourLoaderComponent implements OnInit {
 			location: new FormControl(),
 			img: new FormControl()
 		})
+	}
+
+	ngOnInit(): void {
+
+		this.initForm()
+
 	}
 
 	createTour(): void {
@@ -36,14 +41,7 @@ export class TourLoaderComponent implements OnInit {
 		}
 		this.ticketService.createTour(formParams).subscribe(data=>{});
 
-		this.tourForm = new FormGroup({
-			name: new FormControl('', {validators: Validators.required}),
-			description: new FormControl('', {validators: Validators.minLength(10)}),
-			operator: new FormControl(),
-			price: new FormControl(),
-			location: new FormControl(),
-			img: new FormControl()
-		})
+		this.initForm()
 	}
 
 	selectFile(ev: any): void {
