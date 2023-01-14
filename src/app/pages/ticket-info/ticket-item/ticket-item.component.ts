@@ -64,9 +64,7 @@ export class TicketItemComponent implements OnInit {
                 data.img = 'http://localhost:3000/public/'+ data.img;
                 this.ticket = data;
 				this.location = data.location;
-	            this.ticketService.getNearestTickets(this.location).subscribe( data => {
-		            this.nearestTours = data;
-	            })
+	            this.nearestTickets();
             })
         }
 		this.ticketStorage.setActiveTicket(this.routeIdParam);
@@ -79,15 +77,19 @@ export class TicketItemComponent implements OnInit {
 			if (this.ticketSearchValue) {
 				this.ticketService.getTicketsSearch(this.ticketSearchValue).subscribe(data => this.nearestTours = data);
 			}else{
-				this.ticketService.getNearestTickets(this.location).subscribe( data => {
-					this.nearestTours = data;
-				})
+				this.nearestTickets();
 			}
 		})
 
 		if(this.ticketRestSub && !this.searchTicketSub.closed){
 			this.ticketRestSub.unsubscribe()
 		}
+	}
+
+	nearestTickets(){
+		this.ticketService.getNearestTickets(this.location).subscribe( data => {
+			this.nearestTours = data;
+		})
 	}
 
 	ngOnInit(): void {
@@ -105,9 +107,7 @@ export class TicketItemComponent implements OnInit {
 		})
 
 		// Nearest Tours
-			this.ticketService.getNearestTickets(this.location).subscribe( data => {
-			this.nearestTours = data;
-		})
+			this.nearestTickets();
 
 		// Load Tickets
 		this.ticketService.getTickets().subscribe(
