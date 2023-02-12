@@ -27,8 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			this.time = new Date();
 		}, 1000) // time
 
+		this.userService.isLoggedIn();
 		this.user = this.userService.getUser();
-		this.userLogin = this.userService.setActiveUser()
+		this.userLogin = this.userService.setActiveUser();
 	}
 
 	ngOnDestroy(): void{
@@ -46,6 +47,9 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 	initMenuItems(): MenuItem[]{
 
 		// menu items
+
+		if (this.userService.isLoggedIn()){
+
 		this.items = [
 			{
 				label: 'Билеты',
@@ -62,10 +66,22 @@ export class HeaderComponent implements OnInit, OnDestroy,OnChanges {
 			},
 			{
 				label: 'Выйти',
-				routerLink: ['/auth'],
+				routerLink: ['tickets-list'],
 				command: () => this.userService.logout()
 			}
 		];
+		}else{
+			this.items = [
+				{
+					label: 'Билеты',
+					routerLink: ['tickets-list']
+				},
+				{
+					label: 'Войти',
+					routerLink: ['/auth'],
+				}
+			];
+		}
 		return this.items
 	}
 

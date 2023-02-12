@@ -1,17 +1,17 @@
 <div class="container">
 
 	<p-tabView>
-		<p-tabPanel [cache]="isTabCaching" header="Смена пароля">
+		<p-tabPanel [cache]="true" header="Смена пароля">
 			<ng-template pTemplate="content">
 				<app-change-password></app-change-password>
 			</ng-template>
 		</p-tabPanel>
-		<p-tabPanel header="Статистика">
+		<p-tabPanel [cache]="true" header="Статистика">
 			<ng-template pTemplate="content">
 				<app-statistic></app-statistic>
 			</ng-template>
 		</p-tabPanel>
-        <p-tabPanel header="Добавить тур">
+        <p-tabPanel *ngIf="isAdmin" [cache]="true" header="Добавить тур">
             <ng-template pTemplate="content">
                 <app-tour-loader></app-tour-loader>
             </ng-template>

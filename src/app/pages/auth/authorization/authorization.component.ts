@@ -68,7 +68,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                 const token: string = data.access_token;
                 this.userService.setToken(token, true);
                 setTimeout(() => {
+					if (this.router.url == '/auth'){
                     this.router.navigate(['tickets/tickets-list'])
+					}else{window.location.reload()}
                 }, 1000)
             },
             (err: HttpErrorResponse) => {

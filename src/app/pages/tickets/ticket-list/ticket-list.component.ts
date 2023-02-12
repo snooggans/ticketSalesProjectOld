@@ -5,6 +5,7 @@ import {TicketsStorageService} from "../../../services/tiсkets-storage/tickets-
 import {ActivatedRoute, Router} from "@angular/router";
 import {BlocksStyleDirective} from "../../../directive/blocks-style.directive";
 import {debounceTime, fromEvent, Subscription} from "rxjs";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
 	selector: 'app-ticket-list',
@@ -26,10 +27,12 @@ export class TicketListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	constructor(private ticketService: TicketService,
 	            private ticketStorage: TicketsStorageService,
+				private userService: UserService,
 	            private router: Router) {
 	}
 
 	ngOnInit(): void {
+		this.userService.isLoggedIn();
 		this.ticketService.ticketUpdateSubject$.subscribe(data => {
 			this.tickets = data;
 		})

@@ -14,11 +14,11 @@ import {ToastModule} from 'primeng/toast';
 import {MessageService} from "primeng/api";
 
 @NgModule({
-  declarations: [
-    AuthorizationComponent,
-    AuthComponent,
-    RegistrationComponent,
-  ],
+	declarations: [
+		AuthorizationComponent,
+		AuthComponent,
+		RegistrationComponent,
+	],
 	imports: [
 		CommonModule,
 		AuthRoutingModule,
@@ -28,6 +28,9 @@ import {MessageService} from "primeng/api";
 		CheckboxModule,
 		ButtonModule,
 		ToastModule
+	],
+	exports: [
+		AuthorizationComponent
 	],
 	providers: [MessageService]
 })

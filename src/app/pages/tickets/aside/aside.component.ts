@@ -5,6 +5,7 @@ import {TicketService} from "../../../services/tickets/ticket.service";
 import {MessageService} from 'primeng/api';
 import {SettingsService} from "../../../services/settings/settings.service";
 import {HttpClient} from "@angular/common/http";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
 	selector: 'app-aside',
@@ -15,6 +16,7 @@ export class AsideComponent implements OnInit {
 
 	menuTypes: IMenuType[];
 	selectedMenuType: IMenuType;
+	isLoggedIn: boolean = this.userService.isLoggedIn();
 
 	tourTypes: ITourTypeSelect[] = [
 		{label: 'Все', value: 'all'},
@@ -27,6 +29,7 @@ export class AsideComponent implements OnInit {
 	constructor(private ticketService: TicketService,
 	            private messageService: MessageService,
 	            private settingsService: SettingsService,
+				private userService: UserService,
                 private http: HttpClient) {
 	}
 
@@ -58,6 +61,8 @@ export class AsideComponent implements OnInit {
 		})
 	}
 
+	// isLo
+
     initTours(): void{
         this.http.post<ITour[]>('http://localhost:3000/tours/',{})
             .subscribe((data) => this.ticketService.updateTicketList(data));
@@ -68,7 +73,7 @@ export class AsideComponent implements OnInit {
     }
 
     deleteTours(): void{
-        this.http.delete('http://localhost:3000/tours/remove').subscribe((data) => this.ticketService.updateTicketList([]));;
+        this.http.delete('http://localhost:3000/tours/remove').subscribe((data) => this.ticketService.updateTicketList([]));
     }
 
 }

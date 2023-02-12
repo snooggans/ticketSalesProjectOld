@@ -14,12 +14,12 @@
 		</div>
 	</div>
 
-	<div class="mt-5">
+	<div *ngIf="isLoggedIn; else notLoggedin" class="mt-5">
 		<h2 class="my-5">Личная информация</h2>
 		<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 			<span class="p-float-label">
 			    <input id="first-name" type="text"
-			           formControlName="firstName"
+			           formControlName="clientName"
 			           pInputText>
 			    <ng-container *ngTemplateOutlet="userFormInput;
 			              context: {inputId: 'first-name', label: 'Имя'}"
@@ -28,7 +28,7 @@
 
 			<span class="p-float-label mt-5">
 			    <input id="last-name" type="text"
-			           formControlName="lastName"
+			           formControlName="clientSurname"
 			           pInputText>
 			    <label for="last-name">Фамилия</label>
 			</span>
@@ -41,17 +41,17 @@
 			</span>
 
 			<span class="p-float-label mt-5">
-					<p-inputNumber id="age"
-					               formControlName="age"
-					               [showButtons]="true">
-					</p-inputNumber>
-			    <label for="age">Возраст</label>
-			</span>
-
-			<span class="p-float-label mt-5">
 				<p-calendar id="birthDay" dateFormat="dd.mm.yy"
+							[(ngModel)]="maxDateValue"
+							(click)="calcAge()"
+							[maxDate]="maxDateValue"
+							[minDate]="minDateValue"
 				            formControlName="birthDay"></p-calendar>
 			    <label for="birthDay">День рождения</label>
+			</span>
+
+			<span *ngIf="age" class="p-float-label mt-2">
+				Возраст: {{age}}
 			</span>
 
 			<span class="p-float-label mt-5">
@@ -62,9 +62,14 @@
 			</span>
 			<button class="mt-5" pButton type="submit"
 			        [disabled]="!userForm.valid"
-			        label="Перейти к оформлению"></button>
+			        label="Оформить"></button>
 		</form>
 	</div>
+
+	<ng-template #notLoggedin>
+		<h2 class="mt-5 mb-3">Авторизуйтесь для оформления заказа</h2>
+		<app-authorization></app-authorization>
+	</ng-template>
 
 	<div class="mt-5">
 		<h4>Поиск туров</h4>

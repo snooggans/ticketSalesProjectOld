@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SettingsService} from "../../services/settings/settings.service";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {ISettings} from "../../models/settings";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
 	selector: 'app-settings',
@@ -9,10 +10,12 @@ import {ISettings} from "../../models/settings";
 	styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-	isTabCaching: boolean = true
+	isTabCaching: boolean = false
 	private subjectForSubscribe = new Subject();
+	isAdmin: boolean = this.userService.isAdmin();
 
-	constructor(private settingsService: SettingsService) {
+	constructor(private settingsService: SettingsService,
+	            private userService: UserService) {
 	}
 
 	ngOnInit(): void {

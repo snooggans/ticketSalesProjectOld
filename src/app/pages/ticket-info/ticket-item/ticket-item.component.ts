@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ITour, ITourLocation} from "../../../models/tours";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TicketsStorageService} from "../../../services/tiсkets-storage/tickets-storage.service";
 import {TicketService} from "../../../services/tickets/ticket.service";
 import {IUser} from "../../../models/users";
@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user/user.service";
 import {debounceTime, forkJoin, fromEvent, Subscription} from "rxjs";
 import {IOrder} from "../../../models/order";
+import {formatDate} from "@angular/common";
 
 @Component({
 	selector: 'app-ticket-item',
@@ -20,6 +21,10 @@ export class TicketItemComponent implements OnInit {
 	location: string;
 	user: IUser;
 	userForm: FormGroup;
+	isLoggedIn: boolean = this.userService.isLoggedIn();
+	maxDateValue = new Date(new Date().setFullYear(new Date().getFullYear() - 18));
+	minDateValue = new Date(new Date().setFullYear(new Date().getFullYear() - 90));
+	age: string = '18';
 
 	nearestTours: ITour[];
 	// toursLocation: ITourLocation[];
@@ -37,8 +42,14 @@ export class TicketItemComponent implements OnInit {
 	constructor(private route: ActivatedRoute,
 	            private ticketService: TicketService,
 	            private ticketStorage: TicketsStorageService,
-	            private userService: UserService
+	            private userService: UserService,
+	            private router: Router,
 	            ) {
+	}
+
+	calcAge(): void{
+		let timeDiff = Math.abs(Date.now() - this.userForm.getRawValue().birthDay.getTime());
+		this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365)+'';
 	}
 
 	onSubmit(){
@@ -48,14 +59,19 @@ export class TicketItemComponent implements OnInit {
         const userId = this.userService.getUser()?.id || null;
 
         const postObj: IOrder = {
-            age: postData.age,
+	        clientName: postData.clientName,
+	        clientSurname: postData.clientSurname,
+            age: this.age,
             birthDay: postData.birthDay,
             cardNumber: postData.cardNumber,
+	        citizen: postData.citizen,
             tourId: postData._id,
             userId: userId
         }
-        this.ticketService.sendTourData(postObj).subscribe()
+        this.ticketService.sendTourData(postObj).subscribe();
+		this.router.navigate(['tickets/orders'])
 	}
+
 
 	loadTicket(){
         const paramValueId = this.routeIdParam || this.queryIdParam;
@@ -65,9 +81,9 @@ export class TicketItemComponent implements OnInit {
                 this.ticket = data;
 				this.location = data.location;
 	            this.nearestTickets();
+	            this.ticketStorage.setActiveTicket(this.routeIdParam);
             })
         }
-		this.ticketStorage.setActiveTicket(this.routeIdParam);
 	}
 
 	initSearchTour(): void{
@@ -93,16 +109,15 @@ export class TicketItemComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-
 		this.user = this.userService.getUser();
 
 		// Form Group
 		this.userForm = new FormGroup({
-			firstName: new FormControl('', [ Validators.required, Validators.minLength(2)]),
-			lastName: new FormControl('', {validators: Validators.required}),
+			clientName: new FormControl('', [ Validators.required, Validators.minLength(2)]),
+			clientSurname: new FormControl('', {validators: Validators.required}),
 			cardNumber: new FormControl(this.userService.getActiveUserData()?.cardNumber),
 			birthDay: new FormControl(),
-			age: new FormControl(18),
+			age: new FormControl({value: this.age, disabled: true}),
 			citizen: new FormControl('Россия')
 		})
 
@@ -113,7 +128,7 @@ export class TicketItemComponent implements OnInit {
 		this.ticketService.getTickets().subscribe(
 			(data) => {
 				this.ticketStorage.setStorage(data);
-				this.loadTicket()
+				this.loadTicket();
 			}
 		);
 	}

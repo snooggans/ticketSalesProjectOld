@@ -17,9 +17,22 @@ export class UserService {
 		return JSON.parse(getActiveUser)
 	}
 
+	isAdmin(): boolean{
+		return this.getUser().login == 'Admin';
+	}
+
 	setActiveUser(): string {
 		let getActiveUser: any = window.localStorage.getItem('activeUser');
 		return JSON.parse(getActiveUser).login;
+	}
+
+	isLoggedIn(): boolean{
+		if(this.getUser() && this.getUser().login != 'Гость' ) {
+			return true
+		}else {
+			this.setUser({login: 'Гость', psw:''})
+			return false
+		}
 	}
 
 	getActiveUserData(): IUser{
@@ -40,12 +53,17 @@ export class UserService {
 
 	logout(){
 		this.removeActiveUser();
-		this.removeUserTokenInStorage()
+		this.removeUserTokenInStorage();
+		window.location.reload()
 	}
 
 	setUser(user: IUser): void {
-		this.user = user;
-		window.localStorage.setItem(`activeUser`, JSON.stringify(this.user));
+		if(user) {
+			this.user = user;
+			window.localStorage.setItem(`activeUser`, JSON.stringify(this.user));
+		}else{
+			this.user.login = 'Guest'
+			}
 	}
 
 

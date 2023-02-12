@@ -55,10 +55,18 @@ export class TicketRestService {
 		return this.http.post('http://localhost:3000/orders/', data)
 	}
 
-    getAllOrders(): Observable<IOrder[]>{
+	getAllUserOrders(): Observable<IOrder[]>{
         const userId = this.userService.getUser().id;
         return this.http.get<IOrder[]>('http://localhost:3000/orders/'+userId)
     }
+
+	getAllOrders(): Observable<IOrder[]>{
+		return this.http.get<IOrder[]>('http://localhost:3000/orders/')
+	}
+
+	deleteOrderById(id: string):Observable<any>{
+		return this.http.delete('http://localhost:3000/orders/'+id);
+	}
 
 	createTour(body: any): Observable<any>{
 		return this.http.post("http://localhost:3000/tour-item/", body, {headers:{}})

@@ -1,16 +1,35 @@
-<p-table [value]="users">
-	<ng-template pTemplate="header">
-		<tr>
-			<th *ngFor="let col of cols">
-				{{col.header}}
-			</th>
-		</tr>
-	</ng-template>
-	<ng-template pTemplate="body" let-user>
-		<tr>
-			<td *ngFor="let col of cols">
-				{{user[col.field]}}
-			</td>
-		</tr>
-	</ng-template>
-</p-table>
+<div *ngIf="orders.length>0 else noOrders" class="my-4 h4">
+
+	<p *ngIf="!isAdmin else Admin" class="my-4 h4">Здесь отображается Ваша личная статистика
+		заказов</p>
+	<p-table [value]="tours" *ngIf="orders.length>0; else noOrders">
+		<ng-template pTemplate="header">
+			<tr>
+				<th *ngFor="let col of cols" [pSortableColumn]="col.field">
+					{{col.header}}
+					<p-sortIcon></p-sortIcon>
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-tours>
+			<tr>
+				<td *ngFor="let col of cols">
+					{{tours[col.field]}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>
+
+<ng-template #noOrders>
+	<h3 class="mb-4">Пока нет заказов</h3>
+	<p *ngIf="!isAdmin else AdminNoOrders" class="h4 my-4">Здесть будет отображаться Ваша личная статистика заказов</p>
+</ng-template>
+
+<ng-template #Admin>
+	<p class="h4 my-4">Здесь отображаться статистика всех пользователей</p>
+</ng-template>
+
+<ng-template #AdminNoOrders>
+	<p class="h4 my-4">Здесь будет отображатьсястатистика всех пользователей</p>
+</ng-template>

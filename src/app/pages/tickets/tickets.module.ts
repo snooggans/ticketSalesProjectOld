@@ -20,6 +20,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {TabViewModule} from "primeng/tabview";
 import {SettingsModule} from "../settings/settings.module";
 import { OrdersComponent } from './orders/orders.component';
+import {AuthModule} from "../auth/auth.module";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { OrdersComponent } from './orders/orders.component';
 		ToastModule,
 		InputTextModule,
 		TabViewModule,
-		SettingsModule
+		SettingsModule,
+		AuthModule
 	],
 	providers: [MessageService]
 })

@@ -1,14 +1,33 @@
-<div class="row"
-     #tourWrap>
-    <div *ngFor="let order of orders" class="col-md-6 col-xxl-4 mb-4 ticket-item">
-       <div class="mb-5">
-           <p>ID заказа: {{order._id}}</p>
-           <p>ID пользователя: {{order.userId}}</p>
-           <p>ID тура: {{order.tourId}}</p>
-           <p>Возраст: {{order.age}}</p>
-           <p>Дата рождения: {{order.birthDay}}</p>
-           <p>Номер карты: {{order.cardNumber}}</p>
-       </div>
-
-    </div>
+<div *ngIf="orders.length>0; else noOrders" class="row">
+	<div *ngFor="let order of orders" class="col-xxl-6 mb-4 ticket-item mx-2">
+		<div class="mb-5 row">
+			<div class="col-lg-6 mb-3">
+				<div class="order__img"
+					 style="background: url('http://localhost:3000/public/{{order.img}}') center / cover">
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="h5"><a [routerLink]="['/tickets/ticket/'+order.tourId]"> Тур: {{order.tour}}</a></div>
+				<div>Локация: {{order.location}}</div>
+				<div>Цена: {{order.price}}</div>
+				<div class="h5 mt-3">Данные клиента</div>
+				<div>Имя: {{order.clientName}}</div>
+				<div>Фамилия: {{order.clientSurname}}</div>
+				<div>Возраст: {{order.age}}</div>
+				<div>Дата рождения: {{order.birthDay | date: ' d.M.Y'}} </div>
+				<div *ngIf="order.cardNumber">Карта: {{order.cardNumber}}</div>
+				<div>Гражданство: {{order.citizen}}</div>
+				<button pButton icon="pi pi-trash" class="p-button-sm mt-3" label="Удалить"
+						(click)="deleteOrder(order._id)"
+				></button>
+			</div>
+		</div>
+	</div>
 </div>
+
+<ng-template #noOrders>
+	<div>
+		<h3 class="mb-4">Пока нет заказов</h3>
+		<p-button label="к списку туров" [routerLink]="['/tickets/ticket-list']"></p-button>
+	</div>
+</ng-template>
